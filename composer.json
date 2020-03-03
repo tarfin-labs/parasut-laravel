@@ -1,0 +1,69 @@
+{
+    "name": "tarfinlabs/parasut-laravel",
+    "description": "TarfinLabs",
+    "keywords": [
+        "tarfinlabs",
+        "parasut-laravel"
+    ],
+    "homepage": "https://github.com/tarfinlabs/parasut-laravel",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Yunus Emre Deligöz",
+            "email": "emre.deligoz@tarfin.com",
+            "role": "Developer"
+        },
+        {
+            "name": "Hakan Özdemir",
+            "email": "hakan.ozdemir@tarfin.com",
+            "role": "Developer"
+        },
+        {
+            "name": "Faruk Can",
+            "email": "faruk.can@tarfin.com",
+            "role": "Developer"
+        },
+        {
+            "name": "Turan Karatuğ",
+            "email": "turan.karatug@tarfin.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.2",
+        "illuminate/support": "^6.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^4.0",
+        "phpunit/phpunit": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "TarfinLabs\\ParasutLaravel\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "TarfinLabs\\ParasutLaravel\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "TarfinLabs\\ParasutLaravel\\ParasutLaravelServiceProvider"
+            ],
+            "aliases": {
+                "Parasut": "TarfinLabs\\ParasutLaravel\\ParasutLaravelFacade"
+            }
+        }
+    }
+}
