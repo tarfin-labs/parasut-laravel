@@ -113,4 +113,30 @@ return [
     */
 
     'api_version' => env('PARASUT_API_VERSION', 'v4'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Authorization URL
+    |--------------------------------------------------------------------------
+    |
+    | Authorization URL for parasut.com.
+    |
+    | Default: "/oauth/authorize"
+    |
+    */
+
+    'authorization_url' => env('PARASUT_AUTHORIZATION_URL', '/oauth/authorize'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Token URL
+    |--------------------------------------------------------------------------
+    |
+    | Token URL for parasut.com.
+    |
+    | Default: "/oauth/token"
+    |
+    */
+
+    'token_url' => env('PARASUT_TOKEN_URL', '/oauth/token'),
 ];
