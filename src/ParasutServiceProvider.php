@@ -1,10 +1,10 @@
 <?php
 
-namespace TarfinLabs\ParasutLaravel;
+namespace TarfinLabs\Parasut;
 
 use Illuminate\Support\ServiceProvider;
 
-class ParasutLaravelServiceProvider extends ServiceProvider
+class ParasutServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -20,7 +20,7 @@ class ParasutLaravelServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../config/config.php' => config_path('parasut.php'),
+                __DIR__.'/../config/parasut.php' => config_path('parasut.php'),
             ], 'config');
 
             // Publishing assets.
@@ -44,11 +44,11 @@ class ParasutLaravelServiceProvider extends ServiceProvider
     public function register(): void
     {
         // Automatically apply the package configuration
-        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'parasut');
+        $this->mergeConfigFrom(__DIR__.'/../config/parasut.php', 'parasut');
 
         // Register the main class to use with the facade
         $this->app->singleton('parasut', function () {
-            return new ParasutLaravel;
+            return new Parasut;
         });
     }
 }

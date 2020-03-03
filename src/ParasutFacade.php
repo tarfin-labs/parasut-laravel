@@ -1,13 +1,13 @@
 <?php
 
-namespace TarfinLabs\ParasutLaravel;
+namespace TarfinLabs\Parasut;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \TarfinLabs\ParasutLaravel\Skeleton\SkeletonClass
+ * @see \TarfinLabs\Parasut\Skeleton\SkeletonClass
  */
-class ParasutLaravelFacade extends Facade
+class ParasutFacade extends Facade
 {
     /**
      * Get the registered name of the component.

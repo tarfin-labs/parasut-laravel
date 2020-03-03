@@ -2,8 +2,13 @@
     "name": "tarfinlabs/parasut-laravel",
     "description": "Paraşüt Accounting & Invoicing cloud service (parasut.com) Integration Package for Laravel 5.5+/6+/7+",
     "keywords": [
+        "parasut",
+        "parasut-api",
+        "accounting",
+        "invoicing",
         "tarfinlabs",
-        "parasut-laravel"
+        "laravel",
+        "laravel-package"
     ],
     "homepage": "https://github.com/tarfinlabs/parasut-laravel",
     "license": "MIT",
@@ -41,12 +46,12 @@
     },
     "autoload": {
         "psr-4": {
-            "TarfinLabs\\ParasutLaravel\\": "src"
+            "TarfinLabs\\Parasut\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "TarfinLabs\\ParasutLaravel\\Tests\\": "tests"
+            "TarfinLabs\\Parasut\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -60,10 +65,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "TarfinLabs\\ParasutLaravel\\ParasutLaravelServiceProvider"
+                "TarfinLabs\\Parasut\\ParasutServiceProvider"
             ],
             "aliases": {
-                "Parasut": "TarfinLabs\\ParasutLaravel\\ParasutLaravelFacade"
+                "Parasut": "TarfinLabs\\Parasut\\ParasutFacade"
             }
         }
     }
