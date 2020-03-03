@@ -66,7 +66,10 @@ return [
     |
     | Available types: "password", "authorization_code"
     |
-    | Default: "password:
+    | Default: "password"
+    |
+    | Note: "authorization_code" method needs a registered custom
+    |       "redirect_url" from parasut.com.
     |
     */
 
@@ -74,16 +77,16 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Redirect URL
+    | Redirect URI
     |--------------------------------------------------------------------------
     |
-    | Redirect URL for your parasut.com account.
+    | Redirect URI for your parasut.com account.
     |
     | Default: "urn:ietf:wg:oauth:2.0:oob"
     |
     */
 
-    'redirect_url' => env('PARASUT_REDIRECT_URL', 'urn:ietf:wg:oauth:2.0:oob'),
+    'redirect_uri' => env('PARASUT_REDIRECT_URI', 'urn:ietf:wg:oauth:2.0:oob'),
 
     /*
     |--------------------------------------------------------------------------
