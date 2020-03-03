@@ -1,6 +1,6 @@
 {
     "name": "tarfinlabs/parasut-laravel",
-    "description": "TarfinLabs",
+    "description": "Paraşüt Accounting & Invoicing cloud service (parasut.com) Integration Package for Laravel 5.5+/6+/7+",
     "keywords": [
         "tarfinlabs",
         "parasut-laravel"
@@ -32,7 +32,8 @@
     ],
     "require": {
         "php": "^7.2",
-        "illuminate/support": "^6.0"
+        "illuminate/support": "^6.0",
+        "kitetail/zttp": "^0.6.0"
     },
     "require-dev": {
         "orchestra/testbench": "^4.0",
