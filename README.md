@@ -5,7 +5,7 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/tarfinlabs/parasut-laravel.svg?style=flat-square)](https://scrutinizer-ci.com/g/tarfinlabs/parasut-laravel)
 [![Total Downloads](https://img.shields.io/packagist/dt/tarfinlabs/parasut-laravel.svg?style=flat-square)](https://packagist.org/packages/tarfinlabs/parasut-laravel)
 
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what PSRs you support to avoid any confusion with users and contributors.
+[Paraşüt](https://www.parasut.com) integration for Laravel 6.0+ and PHP 7.2+.
 
 ## Installation
 
@@ -37,17 +37,16 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ### Security
 
-If you discover any security related issues, please email ye@deligoz.me instead of using the issue tracker.
+If you discover any security-related issues, please email development@tarfin.com instead of using the issue tracker.
 
 ## Credits
 
-- [Yunus Emre Deligöz](https://github.com/tarfinlabs)
-- [All Contributors](../../contributors)
+- [Yunus Emre Deligöz](https://github.com/deligoez)
+- [Hakan Özdemir](https://github.com/hozdemir)
+- [Faruk Can](https://github.com/frkcn)
+- [Turan Karatuğ](https://github.com/tkaratug)
+- [and all Contributors](../../contributors)
 
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
-
-## Laravel Package Boilerplate
-
-This package was generated using the [Laravel Package Boilerplate](https://laravelpackageboilerplate.com).
