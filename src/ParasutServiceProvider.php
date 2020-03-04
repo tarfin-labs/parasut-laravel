@@ -2,7 +2,10 @@
 
 namespace TarfinLabs\Parasut;
 
+use TarfinLabs\Parasut\API\HttpClientGateway;
 use Illuminate\Support\ServiceProvider;
+use TarfinLabs\Parasut\Entities\Contact;
+use TarfinLabs\Parasut\API\ClientGateway;
 
 class ParasutServiceProvider extends ServiceProvider
 {
@@ -11,30 +14,10 @@ class ParasutServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        /*
-         * Optional methods to load your package assets
-         */
-        // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'parasut-laravel');
-        // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        // $this->loadRoutesFrom(__DIR__.'/routes.php');
+        $this->mergeConfigs();
 
         if ($this->app->runningInConsole()) {
-            $this->publishes([
-                __DIR__.'/../config/parasut.php' => config_path('parasut.php'),
-            ], 'config');
-
-            // Publishing assets.
-            /*$this->publishes([
-                __DIR__.'/../resources/assets' => public_path('vendor/parasut-laravel'),
-            ], 'assets');*/
-
-            // Publishing the translation files.
-            /*$this->publishes([
-                __DIR__.'/../resources/lang' => resource_path('lang/vendor/parasut-laravel'),
-            ], 'lang');*/
-
-            // Registering package commands.
-            // $this->commands([]);
+            $this->publishConfigs();
         }
     }
 
@@ -43,12 +26,29 @@ class ParasutServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        // Register the main class to use with the facade
+        $this->app->singleton(ClientGateway::class, function () {
+            return new HttpClientGateway(
+                config('parasut.grant_type'),
+                config('parasut.client_id'),
+                config('parasut.client_secret'),
+                config('parasut.username'),
+                config('parasut.password'),
+                config('parasut.redirect_uri'),
+            );
+        });
+    }
+
+    protected function mergeConfigs(): void
+    {
         // Automatically apply the package configuration
         $this->mergeConfigFrom(__DIR__.'/../config/parasut.php', 'parasut');
+    }
 
-        // Register the main class to use with the facade
-        $this->app->singleton('parasut', function () {
-            return new Parasut;
-        });
+    protected function publishConfigs(): void
+    {
+        $this->publishes([
+            __DIR__.'/../config/parasut.php' => config_path('parasut.php'),
+        ], 'config');
     }
 }

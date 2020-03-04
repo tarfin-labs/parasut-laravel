@@ -32,10 +32,10 @@ class AuthenticationTest extends TestCase
             ]),
         ]);
 
-        $parasutClient = new \TarfinLabs\Parasut\Http\Client();
+        $parasutClient = new \TarfinLabs\Parasut\API\HttpClientGateway();
 
         $this->assertNotNull($parasutClient->getAccessToken());
         $this->assertNotNull($parasutClient->getRefreshToken());
-        $this->assertInstanceOf(Carbon::class, $parasutClient->getExpiresIn());
+        $this->assertInstanceOf(Carbon::class, $parasutClient->getExpiresAt());
     }
 }
