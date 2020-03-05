@@ -36,4 +36,12 @@ abstract class BaseEntitiy
         );
     }
 
+    public function find(int $id): array
+    {
+        return $this->clientGateway->call(
+            HttpMethods::GET,
+            implode('/', [$this->endpoint, $id])
+        )['data'];
+    }
+
 }
