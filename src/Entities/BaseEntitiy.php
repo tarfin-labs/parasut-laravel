@@ -44,4 +44,12 @@ abstract class BaseEntitiy
         )['data'];
     }
 
+    public function paginate(int $perPage, int $pageNumber = 1): BaseEntitiy
+    {
+        $this->pageSize = $perPage;
+        $this->page = $pageNumber;
+
+        return $this;
+    }
+
 }
