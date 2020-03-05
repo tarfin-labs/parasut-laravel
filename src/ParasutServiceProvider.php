@@ -3,6 +3,7 @@
 namespace TarfinLabs\Parasut;
 
 use Illuminate\Support\ServiceProvider;
+use TarfinLabs\Parasut\Entities\Contact;
 use TarfinLabs\Parasut\API\ClientGateway;
 use TarfinLabs\Parasut\API\HttpClientGateway;
 
@@ -34,6 +35,8 @@ class ParasutServiceProvider extends ServiceProvider
             config('parasut.password'),
             config('parasut.redirect_uri'),
         ));
+
+        $this->app->bind('parasut.contact', Contact::class);
     }
 
     /**
