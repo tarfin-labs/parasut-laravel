@@ -2,10 +2,9 @@
 
 namespace TarfinLabs\Parasut;
 
-use TarfinLabs\Parasut\Entities\Contact;
+use Illuminate\Support\ServiceProvider;
 use TarfinLabs\Parasut\API\ClientGateway;
 use TarfinLabs\Parasut\API\HttpClientGateway;
-use Illuminate\Support\ServiceProvider;
 
 class ParasutServiceProvider extends ServiceProvider
 {
@@ -37,12 +36,18 @@ class ParasutServiceProvider extends ServiceProvider
         ));
     }
 
+    /**
+     * Merge the configs.
+     */
     protected function mergeConfigs(): void
     {
         // Automatically apply the package configuration
         $this->mergeConfigFrom(__DIR__.'/../config/parasut.php', 'parasut');
     }
 
+    /**
+     * Publish the configs.
+     */
     protected function publishConfigs(): void
     {
         $this->publishes([
