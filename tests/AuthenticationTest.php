@@ -5,6 +5,7 @@ namespace TarfinLabs\Parasut\Tests;
 use Illuminate\Support\Carbon;
 use Orchestra\Testbench\TestCase;
 use Illuminate\Support\Facades\Http;
+use TarfinLabs\Parasut\API\ClientGateway;
 use TarfinLabs\Parasut\ParasutServiceProvider;
 
 class AuthenticationTest extends TestCase
@@ -32,7 +33,7 @@ class AuthenticationTest extends TestCase
             ]),
         ]);
 
-        $parasutClient = new \TarfinLabs\Parasut\API\HttpClientGateway();
+        $parasutClient = app(ClientGateway::class);
 
         $this->assertNotNull($parasutClient->getAccessToken());
         $this->assertNotNull($parasutClient->getRefreshToken());
