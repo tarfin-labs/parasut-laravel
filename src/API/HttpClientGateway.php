@@ -27,24 +27,23 @@ class HttpClientGateway implements ClientGateway
         string $username,
         string $password,
         string $redirectUri
-    )
-    {
-        $this->$grantType = $grantType;
-        $this->$clientId = $clientId;
-        $this->$clientSecret = $clientSecret;
-        $this->$username = $username;
-        $this->$password = $password;
-        $this->$redirectUri = $redirectUri;
+    ) {
+        $this->grantType = $grantType;
+        $this->clientId = $clientId;
+        $this->clientSecret = $clientSecret;
+        $this->username = $username;
+        $this->password = $password;
+        $this->redirectUri = $redirectUri;
 
         $this->authenticate();
     }
 
-    public function getAccessToken(): ?string
+    public function getAccessToken(): string
     {
         return $this->accessToken;
     }
 
-    public function getRefreshToken(): ?string
+    public function getRefreshToken(): string
     {
         return $this->refreshToken;
     }
