@@ -20,6 +20,8 @@ class HttpClientGateway implements ClientGateway
     private string $refreshToken;
     private Carbon $expiresAt;
 
+    private string $baseEntpoint;
+
     public function __construct(
         string $grantType,
         string $clientId,
@@ -34,6 +36,12 @@ class HttpClientGateway implements ClientGateway
         $this->username = $username;
         $this->password = $password;
         $this->redirectUri = $redirectUri;
+
+        $this->baseEntpoint = implode('/',[
+            config('parasut.api_url'),
+            config('parasut.api_version'),
+            config('parasut.company_id'),
+        ]);
 
         $this->authenticate();
     }
@@ -53,21 +61,26 @@ class HttpClientGateway implements ClientGateway
         return $this->expiresAt;
     }
 
+    /**
+     * Authenticate user and get API tokens from parasut.com.
+     *
+     * @return bool
+     */
     public function authenticate(): bool
     {
-        $authenticationParams = [
-            'grant_type'    => $this->grantType,
-            'client_id'     => $this->clientId,
-            'client_secret' => $this->clientSecret,
-            'username'      => $this->username,
-            'password'      => $this->password,
-            'redirect_uri'  => $this->redirectUri,
-        ];
-
         $response = Http::asForm()
                         ->post(
-                            config('parasut.api_url').config('parasut.token_url'),
-                            $authenticationParams
+                            implode('/', [
+                                config('parasut.api_url'),config('parasut.token_url')
+                            ]),
+                            [
+                                'grant_type'    => $this->grantType,
+                                'client_id'     => $this->clientId,
+                                'client_secret' => $this->clientSecret,
+                                'username'      => $this->username,
+                                'password'      => $this->password,
+                                'redirect_uri'  => $this->redirectUri,
+                            ]
                         );
 
         if ($response->successful())
@@ -82,21 +95,29 @@ class HttpClientGateway implements ClientGateway
         return false;
     }
 
-    public function call($method, $endpoint, $queryParams = [], $bodyParams = [], $headers = [])
-    {
-        $options = [
-            'headers' => [
-                'Authorization' => 'Bearer '.$this->token,
-                'Accept'        => 'application/json',
-            ],
-            'json'    => $bodyParams,
-        ];
+    public function call(
+        string $method,
+        string $endpoint,
+        array $filters = null,
+        array $sorts = null,
+        array $includes = null,
+        array $body = null,
+        int $page = 1,
+        int $pageSize = 15
+    ): array {
+        $queryString = http_build_query(array_filter([
+            'filter' => $filters,
+            'sort' => implode(',', $sorts),
+            'include' => implode(',', $includes),
+            'page[number]' => $page,
+            'page[size]' => $pageSize ,
+        ]));
 
-        $options['headers'] = array_merge($options['headers'], $headers);
-        $url = $this->apiUrl.'/'.$endpoint;
-        $url .= empty($queryParams) ? '' : '?'.http_build_query($queryParams);
-        $response = $this->httpClient->request($method, $url, $options);
+        $b = implode('?', [$this->baseEntpoint.'/'.$endpoint, $queryString]);
 
-        return json_decode($response->getBody()->getContents(), true);
+        $response = Http::withToken($this->getAccessToken())
+                        ->send('GET', $b);
+
+        return $response->json();
     }
 }
