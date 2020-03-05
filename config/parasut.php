@@ -125,7 +125,7 @@ return [
     |
     */
 
-    'authorization_url' => env('PARASUT_AUTHORIZATION_URL', '/oauth/authorize'),
+    'authorization_url' => env('PARASUT_AUTHORIZATION_URL', 'oauth/authorize'),
 
     /*
     |--------------------------------------------------------------------------
@@ -138,5 +138,5 @@ return [
     |
     */
 
-    'token_url' => env('PARASUT_TOKEN_URL', '/oauth/token'),
+    'token_url' => env('PARASUT_TOKEN_URL', 'oauth/token'),
 ];
