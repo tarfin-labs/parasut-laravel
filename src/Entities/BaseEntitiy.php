@@ -52,4 +52,11 @@ abstract class BaseEntitiy
         return $this;
     }
 
+    public function sortByAttribute(string $attribute, bool $descending = false): BaseEntitiy
+    {
+        $this->sorts[] = ($descending ? '-' : '').$attribute;
+
+        return $this;
+    }
+
 }
