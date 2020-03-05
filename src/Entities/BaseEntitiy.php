@@ -2,22 +2,19 @@
 
 namespace TarfinLabs\Parasut\Entities;
 
+use TarfinLabs\Parasut\API\ClientGateway;
+
 abstract class BaseEntitiy
 {
-    protected ClientContract $client;
+    protected ClientGateway $clientGateway;
     protected string $endpoint;
     protected array $availableSorts;
     protected array $availableIncludes;
     protected array $availableFilters;
 
-    public function __construct(ClientContract $client)
+    public function __construct()
     {
-        $this->client = $client;
-    }
-
-    public function all(array $parameters)
-    {
-        $this->client->call('GET', $this->endpoint, $parameters);
+        $this->clientGateway = app(ClientGateway::class);
     }
 
 }
