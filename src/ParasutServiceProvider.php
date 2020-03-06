@@ -35,8 +35,6 @@ class ParasutServiceProvider extends ServiceProvider
             config('parasut.password'),
             config('parasut.redirect_uri'),
         ));
-
-        $this->app->bind('parasut.contact', Contact::class);
     }
 
     /**

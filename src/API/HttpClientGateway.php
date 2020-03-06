@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Http;
 class HttpClientGateway implements ClientGateway
 {
     // TODO: Cache tokens
+    // TODO: Move URL's from config to consts
 
     private string $grantType;
     private string $clientId;
@@ -65,6 +66,7 @@ class HttpClientGateway implements ClientGateway
      * Authenticate user and get API tokens from parasut.com.
      *
      * @return bool
+     * @throws \Illuminate\Http\Client\RequestException
      */
     public function authenticate(): bool
     {
@@ -92,7 +94,7 @@ class HttpClientGateway implements ClientGateway
             return true;
         }
 
-        return false;
+        $response->throw()->json();
     }
 
     public function call(
@@ -102,22 +104,27 @@ class HttpClientGateway implements ClientGateway
         array $sorts = null,
         array $includes = null,
         array $body = null,
-        int $page = 1,
-        int $pageSize = 15
+        ?int $page,
+        ?int $pageSize
     ): array {
-        $queryString = http_build_query(array_filter([
-            'filter' => $filters,
-            'sort' => implode(',', $sorts),
-            'include' => implode(',', $includes),
-            'page[number]' => $page,
-            'page[size]' => $pageSize ,
-        ]));
+        $queryString = http_build_query(
+            array_filter([
+                'filter'       => $filters,
+                'sort'         => implode(',', $sorts),
+                'include'      => implode(',', $includes),
+                'page[number]' => $page,
+                'page[size]'   => $pageSize,
+            ]));
 
-        $b = implode('?', [$this->baseEntpoint.'/'.$endpoint, $queryString]);
+        $url = implode('?', [
+            implode('/', [$this->baseEntpoint, $endpoint]),
+            $queryString,
+        ]);
 
         $response = Http::withToken($this->getAccessToken())
-                        ->send('GET', $b);
+                        ->send('GET', $url);
 
         return $response->json();
     }
+
 }

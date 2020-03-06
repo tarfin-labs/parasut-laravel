@@ -37,6 +37,7 @@
     ],
     "require": {
         "php": "^7.4",
+        "calebporzio/sushi": "^2.0",
         "guzzlehttp/guzzle": "^6.5",
         "illuminate/support": "^7.0"
     },
@@ -70,7 +71,6 @@
                 "TarfinLabs\\Parasut\\ParasutServiceProvider"
             ],
             "aliases": {
-                "Parasut": "TarfinLabs\\Parasut\\ParasutFacade"
             }
         }
     }

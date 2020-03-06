@@ -22,9 +22,9 @@ abstract class BaseEntitiy
      *
      * @param  \TarfinLabs\Parasut\API\ClientGateway  $clientGateway
      */
-    public function __construct(ClientGateway $clientGateway)
+    public function __construct()
     {
-        $this->clientGateway = $clientGateway;
+        $this->clientGateway = app(ClientGateway::class);
     }
 
     public function all()

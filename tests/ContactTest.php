@@ -2,11 +2,8 @@
 
 namespace TarfinLabs\Parasut\Tests;
 
-use Illuminate\Support\Carbon;
 use Orchestra\Testbench\TestCase;
-use Illuminate\Support\Facades\Http;
-//use Facades\TarfinLabs\Parasut\Entities\Contact;
-use TarfinLabs\Parasut\Facades\Contact;
+use TarfinLabs\Parasut\Entities\Contact;
 use TarfinLabs\Parasut\ParasutServiceProvider;
 
 class ContactTest extends TestCase
@@ -18,7 +15,35 @@ class ContactTest extends TestCase
     }
 
     /** @test */
-    public function contacts_can_list(): void
+    public function sushi_test(): void
+    {
+        $a = 4;
+        $customers = \TarfinLabs\Parasut\Models\Customer::all();
+
+        $new = new \TarfinLabs\Parasut\Models\Customer();
+        $new->label = 'test';
+
+        $new2 = \TarfinLabs\Parasut\Models\Customer::create([
+            'label' => 'deneme'
+        ]);
+
+        $a = 3;
+    }
+
+    /** @test */
+    public function user_can_create_a_contact(): void
+    {
+        $a = 4;
+
+        $contact = new Contact();
+
+        dd($contact->endpoint);
+
+        $this->assertTrue(true);
+    }
+
+    /** @test */
+    public function user_can_list_contacts(): void
     {
         //Http::fake([
         //    config('parasut.api_url').'/'.config('parasut.token_url') => Http::response([
@@ -42,8 +67,7 @@ class ContactTest extends TestCase
         //    ]),
         //]);
 
-        //$contact = Contact::find(2236978);
-        $contact = Contact::findByName('Hatice')
+        $contact = Contact::findByName('Faruk Can')
                           ->sortByName(true)
                           ->sortById(true)
                           ->includeCategory()
@@ -51,6 +75,8 @@ class ContactTest extends TestCase
                           ->includeContactPeople()
                           ->paginate(8, 1)
                           ->all();
+
+        $contact = Contact::findByName('Faruk Can')->all();
 
         $this->assertTrue(true);
     }
