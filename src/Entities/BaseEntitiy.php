@@ -14,9 +14,14 @@ abstract class BaseEntitiy
     protected array $sorts = [];
     protected array $filters = [];
     protected array $includes = [];
-    protected int $page = 1;
-    protected int $pageSize = 25;
+    protected int $page;
+    protected int $pageSize;
 
+    /**
+     * BaseEntitiy constructor.
+     *
+     * @param  \TarfinLabs\Parasut\API\ClientGateway  $clientGateway
+     */
     public function __construct(ClientGateway $clientGateway)
     {
         $this->clientGateway = $clientGateway;
@@ -31,11 +36,16 @@ abstract class BaseEntitiy
             $this->sorts,
             $this->includes,
             null,
-            $this->page,
-            $this->pageSize
+            $this->page ?? null,
+            $this->pageSize ?? null
         );
     }
 
+    /**
+     * @param  int  $id
+     *
+     * @return array
+     */
     public function find(int $id): array
     {
         return $this->clientGateway->call(
@@ -44,6 +54,12 @@ abstract class BaseEntitiy
         )['data'];
     }
 
+    /**
+     * @param  int  $perPage
+     * @param  int  $pageNumber
+     *
+     * @return \TarfinLabs\Parasut\Entities\BaseEntitiy
+     */
     public function paginate(int $perPage, int $pageNumber = 1): BaseEntitiy
     {
         $this->pageSize = $perPage;
@@ -52,6 +68,12 @@ abstract class BaseEntitiy
         return $this;
     }
 
+    /**
+     * @param  string  $attribute
+     * @param  bool    $descending
+     *
+     * @return \TarfinLabs\Parasut\Entities\BaseEntitiy
+     */
     public function sortByAttribute(string $attribute, bool $descending = false): BaseEntitiy
     {
         $this->sorts[] = ($descending ? '-' : '').$attribute;
