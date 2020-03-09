@@ -13,4 +13,12 @@ class ParasutMock
     {
         return ['content-type' => 'application/json; charset=utf-8'];
     }
+
+    private static function getAuthenticationUrl(): string
+    {
+        return implode('/', [
+            config('parasut.api_url'),
+            config('parasut.token_url'),
+        ]);
+    }
 }
