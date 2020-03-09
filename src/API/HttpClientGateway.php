@@ -124,7 +124,12 @@ class HttpClientGateway implements ClientGateway
         $response = Http::withToken($this->getAccessToken())
                         ->send('GET', $url);
 
-        return $response->json();
+        if ($response->successful())
+        {
+            return $response->json();
+        }
+
+        $response->throw()->json();
     }
 
 }
