@@ -16,7 +16,7 @@ class BaseModel extends Model
         $this->fillable = array_keys($this->schema);
     }
 
-    public function getRows()
+    public function getRows(): array
     {
         return [array_merge(['id' => 'integer'], $this->schema)];
     }

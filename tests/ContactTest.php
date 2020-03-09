@@ -28,4 +28,10 @@ class ContactTest extends TestCase
         $this->assertNotNull(Contact::all());
         $this->assertInstanceOf(Contact::class, $contacts->first());
     }
+
+    /** @test */
+    public function user_can_create_a_new_contact(): void
+    {
+
+    }
 }
