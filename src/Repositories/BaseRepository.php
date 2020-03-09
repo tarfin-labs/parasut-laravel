@@ -42,6 +42,9 @@ class BaseRepository
         $this->meta = new Meta($rawData['meta']);
         $this->links = new Links($rawData['links']);
 
+        // TODO: Find a way to remove initilize model with sushi without a draft record creation
+        $this->model::first()->delete();
+
         $this->model::insert(
             array_map(function ($item)
             {

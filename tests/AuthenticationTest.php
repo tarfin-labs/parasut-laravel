@@ -4,7 +4,6 @@ namespace TarfinLabs\Parasut\Tests;
 
 use Illuminate\Support\Carbon;
 use Orchestra\Testbench\TestCase;
-use Illuminate\Support\Facades\Http;
 use TarfinLabs\Parasut\API\ClientGateway;
 use TarfinLabs\Parasut\Mocks\ParasutMock;
 use TarfinLabs\Parasut\ParasutServiceProvider;
