@@ -2,7 +2,6 @@
 
 namespace TarfinLabs\Parasut\Repositories;
 
-use TarfinLabs\Parasut\Models\Contact;
 use TarfinLabs\Parasut\API\ClientGateway;
 use TarfinLabs\Parasut\Enums\HttpMethods;
 
@@ -43,11 +42,21 @@ class BaseRepository
         $this->meta = new Meta($rawData['meta']);
         $this->links = new Links($rawData['links']);
 
-        return Contact::create([
-            'test' => 'data',
-        ]);
+        $this->model::insert(
+            array_map(function ($item)
+            {
+                $mappings = [];
+                $mappings['id'] = $item['id'];
 
-        return $rawData;
+                foreach ((new $this->model)->getFillable() as $field) {
+                    $mappings[$field] = $item['attributes'][$field];
+                }
+
+                return $mappings;
+            }, $rawData['data'])
+        );
+
+        return $this->model::all();
     }
 
     public function find(int $id): array
