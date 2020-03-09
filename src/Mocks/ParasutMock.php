@@ -2,6 +2,7 @@
 
 namespace TarfinLabs\Parasut\Mocks;
 
+use Faker\Factory;
 use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
@@ -23,5 +24,24 @@ class ParasutMock
                 'content-type' => 'application/json; charset=utf-8',
             ]),
         ]);
+    }
+
+    public static function contacts(int $count = 3): array
+    {
+        $faker = Factory::create('tr_TR');
+
+        $data = [];
+
+        foreach (range(1, $count) as $index) {
+            $data['data'][$index - 1] =                 [
+                'id'=> $index,
+                'type' => 'contacts',
+                'attributes' => '',
+                'relationships' => '',
+                'meta' => '',
+            ];
+        }
+
+        return $data;
     }
 }
