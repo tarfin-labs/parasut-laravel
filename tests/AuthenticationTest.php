@@ -19,7 +19,7 @@ class AuthenticationTest extends TestCase
     /** @test */
     public function user_can_authenticate(): void
     {
-        ParasutMock::authentication();
+        ParasutMock::fakeAuthentication();
 
         $parasutClient = app(ClientGateway::class);
 
