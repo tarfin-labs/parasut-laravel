@@ -7,6 +7,8 @@
 
 [Paraşüt](https://www.parasut.com) integration for Laravel 6.0+ and PHP 7.2+.
 
+## This package is not production-ready yet.
+
 ## Installation
 
 You can install the package via composer:
