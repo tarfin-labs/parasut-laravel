@@ -75,4 +75,17 @@ class ParasutMock
             'created_at'    => Carbon::now()->unix(),
         ];
     }
+
+    public static function allContacts(int $count = 3): void
+    {
+        self::fakeAuthentication();
+
+        Http::fake([
+            self::getResourceUrl('contacts') => Http::response(
+                self::allContactsResponse(),
+                Response::HTTP_OK,
+                self::getJsonContentType()
+            ),
+        ]);
+    }
 }
