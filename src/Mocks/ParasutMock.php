@@ -31,4 +31,15 @@ class ParasutMock
             $resource,
         ]);
     }
+
+    private static function generateMeta($faker, string $resource): array
+    {
+        return [
+            'current_page' => $faker->numberBetween(1, 10),
+            'total_pages'  => $faker->numberBetween(11, 100),
+            'total_count'  => $faker->numberBetween(100, 1000),
+            'per_page'     => $faker->numberBetween(1, 10),
+            'export_url'   => "https://api.parasut.com/v4/{$faker->numberBetween(1000, 9999)}/{$resource}/export",
+        ];
+    }
 }
