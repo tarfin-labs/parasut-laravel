@@ -88,4 +88,68 @@ class ParasutMock
             ),
         ]);
     }
+
+    private static function allContactsResponse(int $count = 3): array
+    {
+        $faker = Factory::create('tr_TR');
+
+        $data = [];
+
+        foreach (range(1, $count) as $index) {
+            $data['data'][$index - 1] = [
+                'id'            => $index,
+                'type'          => 'contacts',
+                'attributes'    => [
+                    'created_at'                   => $faker->iso8601,
+                    'updated_at'                   => $faker->iso8601,
+                    'contact_type'                 => $faker->randomElement(['person', 'company']),
+                    'name'                         => $faker->name,
+                    'email'                        => $faker->email,
+                    'short_name'                   => null,
+                    'balance'                      => $faker->randomFloat(4),
+                    'trl_balance'                  => $faker->randomFloat(4),
+                    'usd_balance'                  => $faker->randomFloat(4),
+                    'eur_balance'                  => $faker->randomFloat(4),
+                    'gbp_balance'                  => $faker->randomFloat(4),
+                    'tax_number'                   => $faker->numerify('###########'),
+                    'tax_office'                   => "{$faker->city} Vergi Dairesi",
+                    'archived'                     => $faker->boolean,
+                    'account_type'                 => $faker->randomElement(['customer', 'supplier']),
+                    'city'                         => $faker->city,
+                    'district'                     => $faker->city,
+                    'address'                      => $faker->address,
+                    'phone'                        => $faker->phoneNumber,
+                    'fax'                          => $faker->phoneNumber,
+                    'is_abroad'                    => $faker->boolean,
+                    'term_days'                    => null,
+                    'invoicing_preferences'        => [],
+                    'sharings_count'               => 0,
+                    'ibans'                        => [],
+                    'exchange_rate_type'           => 'buying',
+                    'iban'                         => null,
+                    'sharing_preview_url'          => "https://uygulama.parasut.com/{$faker->numberBetween(1000, 9999)}/portal/preview/{$faker->numberBetween(1000, 9999)}",
+                    'sharing_preview_path'         => "/{$faker->numberBetween(1000, 9999)}/portal/preview/{$faker->numberBetween(1000, 9999)}",
+                    'payment_reminder_preview_url' => "https://uygulama.parasut.com/{$faker->numberBetween(1000, 9999)}/portal/preview/{$faker->numberBetween(1000, 9999)}/odeme-hatirlat",
+                ],
+                'relationships' => [
+                    'category'          => ['meta' => []],
+                    'price_list'        => ['meta' => []],
+                    'contact_portal'    => ['meta' => []],
+                    'contact_people'    => ['meta' => []],
+                    'activities'        => ['meta' => []],
+                    'e_invoice_inboxes' => ['meta' => []],
+                    'sharings'          => ['meta' => []],
+                ],
+                'meta'          => [
+                    'created_at' => $faker->iso8601,
+                    'updated_at' => $faker->iso8601,
+                ],
+            ];
+        }
+
+        $data['links'] = self::generateLinks($faker, 'contacts');
+        $data['meta'] = self::generateMeta($faker, 'contacts');
+
+        return $data;
+    }
 }
