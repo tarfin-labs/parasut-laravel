@@ -21,4 +21,14 @@ class ParasutMock
             config('parasut.token_url'),
         ]);
     }
+
+    private static function getResourceUrl(string $resource): string
+    {
+        return implode('/', [
+            config('parasut.api_url'),
+            config('parasut.api_version'),
+            config('parasut.company_id'),
+            $resource,
+        ]);
+    }
 }
