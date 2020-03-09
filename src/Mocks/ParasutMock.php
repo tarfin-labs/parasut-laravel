@@ -51,4 +51,15 @@ class ParasutMock
             'last' => "https://api.parasut.com/v4/141099/{$resource}?page%5Bnumber%5D={$faker->numberBetween(1, 10)}&page%5Bsize%5D={$faker->numberBetween(1, 10)}",
         ];
     }
+
+    public static function fakeAuthentication(): void
+    {
+        Http::fake([
+            self::getAuthenticationUrl() => Http::response(
+                self::fakeAuthenticationResponse(),
+                Response::HTTP_OK,
+                self::getJsonContentType()
+            ),
+        ]);
+    }
 }
