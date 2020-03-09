@@ -2,6 +2,7 @@
 
 namespace TarfinLabs\Parasut\Repositories;
 
+use TarfinLabs\Parasut\Models\Contact;
 use TarfinLabs\Parasut\API\ClientGateway;
 use TarfinLabs\Parasut\Enums\HttpMethods;
 
@@ -10,6 +11,10 @@ class BaseRepository
     protected ClientGateway $clientGateway;
 
     protected string $endpoint;
+    protected string $model;
+
+    protected Meta $meta;
+    protected Links $links;
 
     protected array $sorts = [];
     protected array $filters = [];
@@ -24,7 +29,7 @@ class BaseRepository
 
     public function all()
     {
-        $data =  $this->clientGateway->call(
+        $rawData =  $this->clientGateway->call(
             HttpMethods::GET,
             $this->endpoint,
             $this->filters,
@@ -35,7 +40,14 @@ class BaseRepository
             $this->pageSize ?? null
         );
 
-        return $data;
+        $this->meta = new Meta($rawData['meta']);
+        $this->links = new Links($rawData['links']);
+
+        return Contact::create([
+            'test' => 'data',
+        ]);
+
+        return $rawData;
     }
 
     public function find(int $id): array

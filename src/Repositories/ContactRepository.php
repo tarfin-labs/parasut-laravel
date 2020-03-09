@@ -2,9 +2,12 @@
 
 namespace TarfinLabs\Parasut\Repositories;
 
+use TarfinLabs\Parasut\Models\Contact;
+
 class ContactRepository extends BaseRepository
 {
     protected string $endpoint = 'contacts';
+    protected string $model = Contact::class;
 
      // region Sorts
 
