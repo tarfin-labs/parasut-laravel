@@ -42,8 +42,8 @@ class ParasutMock
             ];
         }
 
-        $data['links'] = self::generateMeta($faker, 'contacts');
-        $data['meta'] = '';
+        $data['links'] = self::generateLinks($faker, 'contacts');
+        $data['meta'] = self::generateMeta($faker, 'contacts');
 
         return $data;
     }
@@ -55,7 +55,16 @@ class ParasutMock
             'total_pages'  => $faker->numberBetween(11, 100),
             'total_count'  => $faker->numberBetween(100, 1000),
             'per_page'     => $faker->numberBetween(1, 10),
-            'export_url'   => 'https://api.parasut.com/v4/' . $faker->numberBetween(1000, 9999) . '/' . $resource . '/export',
+            'export_url'   => "https://api.parasut.com/v4/{$faker->numberBetween(1000, 9999)}/{$resource}/export",
+        ];
+    }
+
+    private static function generateLinks($faker, string $resource): array
+    {
+        return [
+            'self' => "https://api.parasut.com/v4/141099/{$resource}?page%5Bnumber%5D={$faker->numberBetween(1, 10)}&page%5Bsize%5D={$faker->numberBetween(1, 10)}",
+            'next' => "https://api.parasut.com/v4/141099/{$resource}?page%5Bnumber%5D={$faker->numberBetween(1, 10)}&page%5Bsize%5D={$faker->numberBetween(1, 10)}",
+            'last' => "https://api.parasut.com/v4/141099/{$resource}?page%5Bnumber%5D={$faker->numberBetween(1, 10)}&page%5Bsize%5D={$faker->numberBetween(1, 10)}",
         ];
     }
 }
