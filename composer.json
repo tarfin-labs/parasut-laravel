@@ -42,6 +42,7 @@
         "illuminate/support": "^7.0"
     },
     "require-dev": {
+        "fzaninotto/faker": "^1.9",
         "orchestra/testbench": "^5.0",
         "phpunit/phpunit": "^9.0"
     },
