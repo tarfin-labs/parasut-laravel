@@ -62,6 +62,24 @@ class BaseRepository
         )['data'];
     }
 
+    public function create(BaseModel $model): bool
+    {
+        $rawData = $this->clientGateway->call(
+            HttpMethods::POST,
+            $this->endpoint,
+            null,
+            null,
+            $this->includes,
+            $this->generateCreationBodyForModel($model),
+            null,
+            null
+        );
+
+        $attributes = $this->rawDataToAttributes($rawData['data']);
+
+        return $this->model::insert($attributes);
+    }
+
     // endregion
 
     // region Supports
