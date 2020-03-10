@@ -5,7 +5,12 @@ namespace TarfinLabs\Parasut\API;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Client\Response;
+use TarfinLabs\Parasut\Exceptions\NotFoundException;
+use TarfinLabs\Parasut\Exceptions\ForbiddenException;
 use TarfinLabs\Parasut\Exceptions\BadRequestException;
+use TarfinLabs\Parasut\Exceptions\UnauthorizedException;
+use TarfinLabs\Parasut\Exceptions\TooManyRequestsException;
+use TarfinLabs\Parasut\Exceptions\UnprocessableEntityException;
 
 class HttpClientGateway implements ClientGateway
 {
@@ -130,8 +135,47 @@ class HttpClientGateway implements ClientGateway
         {
             return $response->json();
         }
-        
-        $response->throw()->json();
+
+
+        $this->catchException($response);
+    }
+
+    /**
+     * Catches the status code and throws appropriate exception.
+     *
+     * @param  \Illuminate\Http\Client\Response  $response
+     *
+     * @throws \TarfinLabs\Parasut\Exceptions\BadRequestException
+     * @throws \TarfinLabs\Parasut\Exceptions\ForbiddenException
+     * @throws \TarfinLabs\Parasut\Exceptions\NotFoundException
+     * @throws \TarfinLabs\Parasut\Exceptions\TooManyRequestsException
+     * @throws \TarfinLabs\Parasut\Exceptions\UnauthorizedException
+     * @throws \TarfinLabs\Parasut\Exceptions\UnprocessableEntityException
+     */
+    protected function catchException(Response $response): void
+    {
+        switch ($response->status()) {
+            case BadRequestException::$statusCode:
+                throw new BadRequestException($response);
+                break;
+            case ForbiddenException::$statusCode:
+                throw new ForbiddenException($response);
+                break;
+            case NotFoundException::$statusCode:
+                throw new NotFoundException($response);
+                break;
+            case TooManyRequestsException::$statusCode;
+                throw new TooManyRequestsException($response);
+                break;
+            case UnauthorizedException::$statusCode;
+                throw new UnauthorizedException($response);
+                break;
+            case UnprocessableEntityException::$statusCode:
+                throw new UnprocessableEntityException($response);
+                break;
+            default:
+                break;
+        }
     }
 
 }
