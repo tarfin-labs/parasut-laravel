@@ -25,11 +25,7 @@ class ContactTest extends TestCase
     /** @test */
     public function user_can_create_a_new_contact(): void
     {
-        $faker = Factory::create('tr_TR');
-
-        $contact = new Contact();
-        $contact->name = '#TESTX# '.$faker->name;
-        $contact->account_type = $faker->randomElement(['customer', 'supplier']);
+        $contact = factory(Contact::class)->make();
 
         ParasutMock::createContact($contact);
 
