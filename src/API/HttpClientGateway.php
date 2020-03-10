@@ -105,6 +105,23 @@ class HttpClientGateway implements ClientGateway
         $response->throw()->json();
     }
 
+    protected function buildHttpQuery(
+        $filters = null,
+        $sorts = null,
+        $includes = null,
+        $page = null,
+        $pageSize = null
+    ): string {
+        return http_build_query(
+            array_filter([
+                'filter'       => $filters,
+                'sort'         => !empty($sorts) ? implode(',', $sorts) : null,
+                'include'      => !empty($includes) ? implode(',', $includes) : null,
+                'page[number]' => $page,
+                'page[size]'   => $pageSize,
+            ]));;
+    }
+
     public function call(
         string $method,
         string $endpoint,
@@ -115,16 +132,9 @@ class HttpClientGateway implements ClientGateway
         ?int $page,
         ?int $pageSize
     ): array {
-        $queryString = http_build_query(
-            array_filter([
-                'filter'       => $filters,
-                'sort'         => !empty($sorts) ? implode(',', $sorts) : null,
-                'include'      => !empty($includes) ? implode(',', $includes) : null,
-                'page[number]' => $page,
-                'page[size]'   => $pageSize,
-            ]));
-
         $url = implode('/', [$this->baseEntpoint, $endpoint]);
+
+        $queryString = $this->buildHttpQuery($filters, $sorts, $includes, $page, $pageSize);
 
         if (!empty($queryString)){
             $url = implode('?', [$queryString]);
@@ -137,7 +147,6 @@ class HttpClientGateway implements ClientGateway
         {
             return $response->json();
         }
-
 
         $this->catchException($response);
     }
