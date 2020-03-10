@@ -154,7 +154,7 @@ class ParasutMock
         return $data;
     }
 
-    private static function createContactResponse(Contact $contact): array
+    private static function createContactResponse(?Contact $contact): array
     {
         $faker = Factory::create('tr_TR');
 
@@ -166,7 +166,7 @@ class ParasutMock
                     'created_at'                   => $contact->created_at ?? $faker->iso8601,
                     'updated_at'                   => $contact->updated_at ?? $faker->iso8601,
                     'contact_type'                 => $contact->contact_type ?? 'company',
-                    'name'                         => $contact->name, // required
+                    'name'                         => $contact->name ?? $faker->name,
                     'email'                        => $contact->email ?? null,
                     'short_name'                   => $contact->short_name ?? null,
                     'balance'                      => $contact->balance ?? '0.0',
@@ -177,7 +177,7 @@ class ParasutMock
                     'tax_number'                   => $contact->tax_number ?? null,
                     'tax_office'                   => $contact->tax_office ?? null,
                     'archived'                     => $contact->archived ?? false,
-                    'account_type'                 => $contact->account_type, // required
+                    'account_type'                 => $contact->account_type ?? $faker->randomElement(['customer', 'supplier']),
                     'city'                         => $contact->city ?? null,
                     'district'                     => $contact->district ?? null,
                     'address'                      => $contact->address ?? null,
@@ -222,5 +222,22 @@ class ParasutMock
                 self::getJsonContentType()
             ),
         ]);
+    }
+
+    public static function findContact(): int
+    {
+        self::fakeAuthentication();
+
+        $response = self::createContactResponse(null);
+
+        Http::fake([
+            self::getResourceUrl('contacts/'.$response['data']['id']) => Http::response(
+                $response,
+                Response::HTTP_OK,
+                self::getJsonContentType()
+            ),
+        ]);
+
+        return $response['data']['id'];
     }
 }
