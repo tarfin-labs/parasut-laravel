@@ -4,6 +4,8 @@ namespace TarfinLabs\Parasut\API;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Client\Response;
+use TarfinLabs\Parasut\Exceptions\BadRequestException;
 
 class HttpClientGateway implements ClientGateway
 {
@@ -110,8 +112,8 @@ class HttpClientGateway implements ClientGateway
         $queryString = http_build_query(
             array_filter([
                 'filter'       => $filters,
-                'sort'         => implode(',', $sorts),
-                'include'      => implode(',', $includes),
+                'sort'         => !empty($sorts) ? implode(',', $sorts) : null,
+                'include'      => !empty($includes) ? implode(',', $includes) : null,
                 'page[number]' => $page,
                 'page[size]'   => $pageSize,
             ]));
@@ -122,13 +124,13 @@ class HttpClientGateway implements ClientGateway
         ]);
 
         $response = Http::withToken($this->getAccessToken())
-                        ->send('GET', $url);
+                        ->send($method, $url);
 
         if ($response->successful())
         {
             return $response->json();
         }
-
+        
         $response->throw()->json();
     }
 
