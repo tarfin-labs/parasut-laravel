@@ -3,7 +3,6 @@
 namespace TarfinLabs\Parasut;
 
 use Illuminate\Support\ServiceProvider;
-use TarfinLabs\Parasut\Entities\Contact;
 use TarfinLabs\Parasut\API\ClientGateway;
 use TarfinLabs\Parasut\API\HttpClientGateway;
 
@@ -29,7 +28,7 @@ class ParasutServiceProvider extends ServiceProvider
         $this->mergeConfigs();
 
         // Register the main class to use with the facade
-        $this->app->singleton(ClientGateway::class, fn() => new HttpClientGateway(
+        $this->app->singleton(ClientGateway::class, fn () => new HttpClientGateway(
             config('parasut.grant_type'),
             config('parasut.client_id'),
             config('parasut.client_secret'),

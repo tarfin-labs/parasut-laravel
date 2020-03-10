@@ -2,8 +2,8 @@
 
 namespace TarfinLabs\Parasut\Models;
 
-use Sushi\Sushi;
 use Illuminate\Database\Eloquent\Model;
+use Sushi\Sushi;
 
 class BaseModel extends Model
 {

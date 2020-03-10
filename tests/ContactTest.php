@@ -4,8 +4,8 @@ namespace TarfinLabs\Parasut\Tests;
 
 use Faker\Factory;
 use TarfinLabs\Parasut\Models\Contact;
-use TarfinLabs\Parasut\Tests\Mocks\ParasutMock;
 use TarfinLabs\Parasut\Repositories\ContactRepository;
+use TarfinLabs\Parasut\Tests\Mocks\ParasutMock;
 
 class ContactTest extends TestCase
 {
