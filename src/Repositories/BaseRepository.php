@@ -54,12 +54,24 @@ class BaseRepository
         return $this->model::all();
     }
 
-    public function find(int $id): array
+    public function find(int $id): ?BaseModel
     {
-        return $this->clientGateway->call(
+        $rawData =  $this->clientGateway->call(
             HttpMethods::GET,
-            implode('/', [$this->endpoint, $id])
-        )['data'];
+            $this->endpoint . '/' . $id,
+            null,
+            null,
+            $this->includes,
+            null,
+            null,
+            null
+        );
+
+        $attributes = $this->rawDataToAttributes($rawData['data']);
+
+        $this->model::insert($attributes);
+
+        return $this->model::find($attributes['id']);
     }
 
     public function create(BaseModel $model): BaseModel
