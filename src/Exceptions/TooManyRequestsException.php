@@ -2,18 +2,7 @@
 
 namespace TarfinLabs\Parasut\Exceptions;
 
-use Exception;
-
-class TooManyRequestsException extends Exception
+class TooManyRequestsException extends BaseException
 {
-    /**
-     * Create a TooManyRequestsException.
-     *
-     * @param  array  $json
-     */
-    public function __construct(array $json)
-    {
-        $a = 4;
-        parent::__construct("value");
-    }
+    public static int $statusCode = 429;
 }
