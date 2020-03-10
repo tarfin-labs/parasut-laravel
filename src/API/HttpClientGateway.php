@@ -124,13 +124,14 @@ class HttpClientGateway implements ClientGateway
                 'page[size]'   => $pageSize,
             ]));
 
-        $url = implode('?', [
-            implode('/', [$this->baseEntpoint, $endpoint]),
-            $queryString,
-        ]);
+        $url = implode('/', [$this->baseEntpoint, $endpoint]);
+
+        if (!empty($queryString)){
+            $url = implode('?', [$queryString]);
+        }
 
         $response = Http::withToken($this->getAccessToken())
-                        ->send($method, $url);
+                        ->send($method, $url, $body);
 
         if ($response->successful())
         {
