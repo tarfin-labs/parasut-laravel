@@ -62,7 +62,7 @@ class BaseRepository
         )['data'];
     }
 
-    public function create(BaseModel $model): bool
+    public function create(BaseModel $model): BaseModel
     {
         $rawData = $this->clientGateway->call(
             HttpMethods::POST,
@@ -77,7 +77,9 @@ class BaseRepository
 
         $attributes = $this->rawDataToAttributes($rawData['data']);
 
-        return $this->model::insert($attributes);
+        $this->model::insert($attributes);
+
+        return $this->model::find($attributes['id']);
     }
 
     // endregion
@@ -103,6 +105,8 @@ class BaseRepository
             ],
         ];
     }
+
+    // TODO: Merge `rawDataToAttributes()` and `multipleRawDataToAttributes()`
 
     protected function rawDataToAttributes(array $rawData): array
     {
