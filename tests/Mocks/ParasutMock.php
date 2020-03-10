@@ -6,6 +6,7 @@ use Faker\Factory;
 use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
+use TarfinLabs\Parasut\Models\Contact;
 
 class ParasutMock
 {
@@ -151,5 +152,75 @@ class ParasutMock
         $data['meta'] = self::generateMeta($faker, 'contacts');
 
         return $data;
+    }
+
+    private static function createContactResponse(Contact $contact): array
+    {
+        $faker = Factory::create('tr_TR');
+
+        return [
+            'data' => [
+                'id'            => (string) $faker->numberBetween(10000, 99999),
+                'type'          => 'contacts',
+                'attributes'    => [
+                    'created_at'                   => $contact->created_at ?? $faker->iso8601,
+                    'updated_at'                   => $contact->updated_at ?? $faker->iso8601,
+                    'contact_type'                 => $contact->contact_type ?? 'company',
+                    'name'                         => $contact->name, // required
+                    'email'                        => $contact->email ?? null,
+                    'short_name'                   => $contact->short_name ?? null,
+                    'balance'                      => $contact->balance ?? '0.0',
+                    'trl_balance'                  => $contact->trl_balance ?? '0.0',
+                    'usd_balance'                  => $contact->usd_balance ?? '0.0',
+                    'eur_balance'                  => $contact->eur_balance ?? '0.0',
+                    'gbp_balance'                  => $contact->gbp_balance ?? '0.0',
+                    'tax_number'                   => $contact->tax_number ?? null,
+                    'tax_office'                   => $contact->tax_office ?? null,
+                    'archived'                     => $contact->archived ?? false,
+                    'account_type'                 => $contact->account_type, // required
+                    'city'                         => $contact->city ?? null,
+                    'district'                     => $contact->district ?? null,
+                    'address'                      => $contact->address ?? null,
+                    'phone'                        => $contact->phone ?? null,
+                    'fax'                          => $contact->fax ?? null,
+                    'is_abroad'                    => $contact->is_abroad ?? false,
+                    'term_days'                    => $contact->term_days ?? null,
+                    'invoicing_preferences'        => $contact->invoicing_preferences ?? [],
+                    'sharings_count'               => $contact->sharings_count ?? 0,
+                    'ibans'                        => $contact->ibans ?? [],
+                    'exchange_rate_type'           => $contact->exchange_rate_type ?? 'buying',
+                    'iban'                         => $contact->iban ?? null,
+                    'sharing_preview_url'          => 'https://uygulama.parasut.com/'.config('parasut.company_id').'/portal/preview/'.$faker->numberBetween(1000, 9999),
+                    'sharing_preview_path'         => '/'.config('parasut.company_id').'/portal/preview/'.$faker->numberBetween(1000, 9999),
+                    'payment_reminder_preview_url' => 'https://uygulama.parasut.com/'.config('parasut.company_id').'/portal/preview/'.$faker->numberBetween(1000, 9999).'/odeme-hatirlat',
+                ],
+                'relationships' => [
+                    'category'          => ['meta' => []],
+                    'price_list'        => ['meta' => []],
+                    'contact_portal'    => ['meta' => []],
+                    'contact_people'    => ['meta' => []],
+                    'activities'        => ['meta' => []],
+                    'e_invoice_inboxes' => ['meta' => []],
+                    'sharings'          => ['meta' => []],
+                ],
+                'meta'          => [
+                    'created_at' => $contact->created_at ?? $faker->iso8601,
+                    'updated_at' => $contact->updated_at ?? $faker->iso8601,
+                ],
+            ],
+        ];
+    }
+
+    public static function createContact(Contact $contact): void
+    {
+        self::fakeAuthentication();
+
+        Http::fake([
+            self::getResourceUrl('contacts') => Http::response(
+                self::createContactResponse($contact),
+                Response::HTTP_OK,
+                self::getJsonContentType()
+            ),
+        ]);
     }
 }
