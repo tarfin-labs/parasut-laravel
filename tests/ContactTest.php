@@ -3,7 +3,7 @@
 namespace TarfinLabs\Parasut\Tests;
 
 use TarfinLabs\Parasut\Models\Contact;
-use TarfinLabs\Parasut\Mocks\ParasutMock;
+use TarfinLabs\Parasut\Tests\Mocks\ParasutMock;
 use TarfinLabs\Parasut\Repositories\ContactRepository;
 
 class ContactTest extends TestCase

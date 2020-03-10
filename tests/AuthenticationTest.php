@@ -4,7 +4,7 @@ namespace TarfinLabs\Parasut\Tests;
 
 use Illuminate\Support\Carbon;
 use TarfinLabs\Parasut\API\ClientGateway;
-use TarfinLabs\Parasut\Mocks\ParasutMock;
+use TarfinLabs\Parasut\Tests\Mocks\ParasutMock;
 
 class AuthenticationTest extends TestCase
 {

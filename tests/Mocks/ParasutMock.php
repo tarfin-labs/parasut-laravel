@@ -1,6 +1,6 @@
 <?php
 
-namespace TarfinLabs\Parasut\Mocks;
+namespace TarfinLabs\Parasut\Tests\Mocks;
 
 use Faker\Factory;
 use Illuminate\Http\Response;
