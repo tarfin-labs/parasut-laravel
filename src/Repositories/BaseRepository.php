@@ -66,6 +66,26 @@ class BaseRepository
 
     // region Supports
 
+    protected function generateCreationBodyForModel(BaseModel $model): array
+    {
+        $attributes = [];
+
+        foreach ($model->getAttributes() as $name => $value) {
+            if  (!empty($value))
+            {
+                $attributes[$name] = $value;
+            }
+        }
+
+        return [
+            'data' => [
+                'type'       => $this->endpoint,
+                'attributes' => $attributes,
+                'relationships' => []
+            ],
+        ];
+    }
+
     protected function multipleRawDataToAttributes(array $rawData): array
     {
         return array_map(function ($item) {
