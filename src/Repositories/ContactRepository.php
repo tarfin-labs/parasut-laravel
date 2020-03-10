@@ -9,7 +9,7 @@ class ContactRepository extends BaseRepository
     protected string $endpoint = 'contacts';
     protected string $model = Contact::class;
 
-     // region Sorts
+    // region Sorts
 
     public function sortById(bool $descending = false): ContactRepository
     {
