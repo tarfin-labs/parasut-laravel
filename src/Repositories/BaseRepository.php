@@ -28,7 +28,7 @@ class BaseRepository
 
     public function all()
     {
-        $rawData =  $this->clientGateway->call(
+        $rawData = $this->clientGateway->call(
             HttpMethods::GET,
             $this->endpoint,
             $this->filters,
@@ -46,8 +46,7 @@ class BaseRepository
         $this->model::first()->delete();
 
         $this->model::insert(
-            array_map(function ($item)
-            {
+            array_map(function ($item) {
                 $mappings = [];
                 $mappings['id'] = $item['id'];
 
