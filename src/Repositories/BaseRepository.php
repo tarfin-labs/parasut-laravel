@@ -2,8 +2,10 @@
 
 namespace TarfinLabs\Parasut\Repositories;
 
+use TarfinLabs\Parasut\Models\BaseModel;
 use TarfinLabs\Parasut\API\ClientGateway;
 use TarfinLabs\Parasut\Enums\HttpMethods;
+use Illuminate\Database\Eloquent\Collection;
 
 class BaseRepository
 {
@@ -26,7 +28,9 @@ class BaseRepository
         $this->clientGateway = app(ClientGateway::class);
     }
 
-    public function all()
+    // region CRUD
+
+    public function all(): Collection
     {
         $rawData = $this->clientGateway->call(
             HttpMethods::GET,
@@ -45,18 +49,7 @@ class BaseRepository
         // TODO: Find a way to remove initilize model with sushi without a draft record creation
         $this->model::first()->delete();
 
-        $this->model::insert(
-            array_map(function ($item) {
-                $mappings = [];
-                $mappings['id'] = $item['id'];
-
-                foreach ((new $this->model)->getFillable() as $field) {
-                    $mappings[$field] = $item['attributes'][$field];
-                }
-
-                return $mappings;
-            }, $rawData['data'])
-        );
+        $this->model::insert($this->multipleRawDataToAttributes($rawData['data']));
 
         return $this->model::all();
     }
@@ -68,6 +61,28 @@ class BaseRepository
             implode('/', [$this->endpoint, $id])
         )['data'];
     }
+
+    // endregion
+
+    // region Supports
+
+    protected function multipleRawDataToAttributes(array $rawData): array
+    {
+        return array_map(function ($item) {
+            $mappings = [];
+            $mappings['id'] = $item['id'];
+
+            foreach ((new $this->model)->getFillable() as $field) {
+                $mappings[$field] = $item['attributes'][$field];
+            }
+
+            return $mappings;
+        }, $rawData);
+    }
+
+    // endregion
+
+    // region Helpers
 
     public function sortByAttribute(string $attribute, bool $descending = false): BaseRepository
     {
@@ -83,4 +98,6 @@ class BaseRepository
 
         return $this;
     }
+
+    // endregion
 }
