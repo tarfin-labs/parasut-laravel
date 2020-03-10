@@ -86,6 +86,18 @@ class BaseRepository
         ];
     }
 
+    protected function rawDataToAttributes(array $rawData): array
+    {
+        $mappings = [];
+        $mappings['id'] = $rawData['id'];
+
+        foreach ((new $this->model)->getFillable() as $field) {
+            $mappings[$field] = $rawData['attributes'][$field];
+        }
+
+        return $mappings;
+    }
+
     protected function multipleRawDataToAttributes(array $rawData): array
     {
         return array_map(function ($item) {
