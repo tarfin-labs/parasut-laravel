@@ -47,4 +47,24 @@ class ContactTest extends TestCase
             $contactReturned->name
         );
     }
+
+    /** @test */
+    public function user_can_view_a_contact(): void
+    {
+        $contactId = ParasutMock::findContact();
+
+        $contactRepository = new ContactRepository();
+
+        $contact = $contactRepository->find($contactId);
+
+        $this->assertInstanceOf(
+            Contact::class,
+            $contact
+        );
+
+        $this->assertEquals(
+            $contactId,
+            $contact->id
+        );
+    }
 }
