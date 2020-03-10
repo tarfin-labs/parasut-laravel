@@ -17,6 +17,8 @@ class ParasutServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->publishConfigs();
         }
+
+        $this->loadFactories();
     }
 
     /**
@@ -54,5 +56,10 @@ class ParasutServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../config/parasut.php' => config_path('parasut.php'),
         ], 'config');
+    }
+
+    protected function loadFactories(): void
+    {
+        $this->loadFactoriesFrom(__DIR__.'/Factories');
     }
 }
