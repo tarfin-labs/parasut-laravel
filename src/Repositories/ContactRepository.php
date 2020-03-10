@@ -11,22 +11,22 @@ class ContactRepository extends BaseRepository
 
     // region Sorts
 
-    public function sortById(bool $descending = false): ContactRepository
+    public function sortById(bool $descending = false): self
     {
         return $this->sortByAttribute('id', $descending);
     }
 
-    public function sortByBalance(bool $descending = false): ContactRepository
+    public function sortByBalance(bool $descending = false): self
     {
         return $this->sortByAttribute('balance', $descending);
     }
 
-    public function sortByName(bool $descending = false): ContactRepository
+    public function sortByName(bool $descending = false): self
     {
         return $this->sortByAttribute('name', $descending);
     }
 
-    public function sortByEmail(bool $descending = false): ContactRepository
+    public function sortByEmail(bool $descending = false): self
     {
         return $this->sortByAttribute('email', $descending);
     }
@@ -35,34 +35,35 @@ class ContactRepository extends BaseRepository
 
     // region Filters
 
-    public function findByName(string $name): ContactRepository
+    public function findByName(string $name): self
     {
         $this->filters['name'] = $name;
 
         return $this;
     }
 
-    public function findByEmail(string $email): ContactRepository{
+    public function findByEmail(string $email): self
+    {
         $this->filters['email'] = $email;
 
         return $this;
     }
 
-    public function findByTaxNumber(string $taxNumber): ContactRepository
+    public function findByTaxNumber(string $taxNumber): self
     {
         $this->filters['tax_number'] = $taxNumber;
 
         return $this;
     }
 
-    public function findByTaxOffice(string $taxOffice): ContactRepository
+    public function findByTaxOffice(string $taxOffice): self
     {
         $this->filters['tax_office'] = $taxOffice;
 
         return $this;
     }
 
-    public function findByCity(string $city): ContactRepository
+    public function findByCity(string $city): self
     {
         $this->filters['city'] = $city;
 
@@ -73,21 +74,21 @@ class ContactRepository extends BaseRepository
 
     // region Includes
 
-    public function includeCategory(): ContactRepository
+    public function includeCategory(): self
     {
         $this->includes[] = 'category';
 
         return $this;
     }
 
-    public function includeContactPortal(): ContactRepository
+    public function includeContactPortal(): self
     {
         $this->includes[] = 'contact_portal';
 
         return $this;
     }
 
-    public function includeContactPeople(): ContactRepository
+    public function includeContactPeople(): self
     {
         $this->includes[] = 'contact_people';
 

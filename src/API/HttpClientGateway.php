@@ -3,14 +3,14 @@
 namespace TarfinLabs\Parasut\API;
 
 use Exception;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Http\Client\Response;
-use TarfinLabs\Parasut\Exceptions\NotFoundException;
-use TarfinLabs\Parasut\Exceptions\ForbiddenException;
 use TarfinLabs\Parasut\Exceptions\BadRequestException;
-use TarfinLabs\Parasut\Exceptions\UnauthorizedException;
+use TarfinLabs\Parasut\Exceptions\ForbiddenException;
+use TarfinLabs\Parasut\Exceptions\NotFoundException;
 use TarfinLabs\Parasut\Exceptions\TooManyRequestsException;
+use TarfinLabs\Parasut\Exceptions\UnauthorizedException;
 use TarfinLabs\Parasut\Exceptions\UnprocessableEntityException;
 
 class HttpClientGateway implements ClientGateway
@@ -46,7 +46,7 @@ class HttpClientGateway implements ClientGateway
         $this->password = $password;
         $this->redirectUri = $redirectUri;
 
-        $this->baseEntpoint = implode('/',[
+        $this->baseEntpoint = implode('/', [
             config('parasut.api_url'),
             config('parasut.api_version'),
             config('parasut.company_id'),
@@ -81,7 +81,7 @@ class HttpClientGateway implements ClientGateway
         $response = Http::asForm()
                         ->post(
                             implode('/', [
-                                config('parasut.api_url'),config('parasut.token_url')
+                                config('parasut.api_url'), config('parasut.token_url'),
                             ]),
                             [
                                 'grant_type'    => $this->grantType,
@@ -93,8 +93,7 @@ class HttpClientGateway implements ClientGateway
                             ]
                         );
 
-        if ($response->successful())
-        {
+        if ($response->successful()) {
             $this->accessToken = $response->json()['access_token'];
             $this->refreshToken = $response->json()['refresh_token'];
             $this->expiresAt = Carbon::now()->addSeconds($response->json()['expires_in']);
@@ -115,11 +114,11 @@ class HttpClientGateway implements ClientGateway
         return http_build_query(
             array_filter([
                 'filter'       => $filters,
-                'sort'         => !empty($sorts) ? implode(',', $sorts) : null,
-                'include'      => !empty($includes) ? implode(',', $includes) : null,
+                'sort'         => ! empty($sorts) ? implode(',', $sorts) : null,
+                'include'      => ! empty($includes) ? implode(',', $includes) : null,
                 'page[number]' => $page,
                 'page[size]'   => $pageSize,
-            ]));;
+            ]));
     }
 
     public function call(
@@ -136,15 +135,14 @@ class HttpClientGateway implements ClientGateway
 
         $queryString = $this->buildHttpQuery($filters, $sorts, $includes, $page, $pageSize);
 
-        if (!empty($queryString)){
+        if (! empty($queryString)) {
             $url = implode('?', [$queryString]);
         }
 
         $response = Http::withToken($this->getAccessToken())
                         ->send($method, $url, ['json' => $body]);
 
-        if ($response->successful())
-        {
+        if ($response->successful()) {
             return $response->json();
         }
 
@@ -175,10 +173,10 @@ class HttpClientGateway implements ClientGateway
             case NotFoundException::$statusCode:
                 throw new NotFoundException($response);
                 break;
-            case TooManyRequestsException::$statusCode;
+            case TooManyRequestsException::$statusCode:
                 throw new TooManyRequestsException($response);
                 break;
-            case UnauthorizedException::$statusCode;
+            case UnauthorizedException::$statusCode:
                 throw new UnauthorizedException($response);
                 break;
             case UnprocessableEntityException::$statusCode:
@@ -189,5 +187,4 @@ class HttpClientGateway implements ClientGateway
                 break;
         }
     }
-
 }

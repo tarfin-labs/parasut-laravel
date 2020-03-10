@@ -2,10 +2,10 @@
 
 namespace TarfinLabs\Parasut\Repositories;
 
-use TarfinLabs\Parasut\Models\BaseModel;
+use Illuminate\Database\Eloquent\Collection;
 use TarfinLabs\Parasut\API\ClientGateway;
 use TarfinLabs\Parasut\Enums\HttpMethods;
-use Illuminate\Database\Eloquent\Collection;
+use TarfinLabs\Parasut\Models\BaseModel;
 
 class BaseRepository
 {
@@ -56,9 +56,9 @@ class BaseRepository
 
     public function find(int $id): ?BaseModel
     {
-        $rawData =  $this->clientGateway->call(
+        $rawData = $this->clientGateway->call(
             HttpMethods::GET,
-            $this->endpoint . '/' . $id,
+            $this->endpoint.'/'.$id,
             null,
             null,
             $this->includes,
@@ -103,8 +103,7 @@ class BaseRepository
         $attributes = [];
 
         foreach ($model->getAttributes() as $name => $value) {
-            if  (!empty($value))
-            {
+            if (! empty($value)) {
                 $attributes[$name] = $value;
             }
         }
@@ -113,7 +112,7 @@ class BaseRepository
             'data' => [
                 'type'       => $this->endpoint,
                 'attributes' => $attributes,
-                'relationships' => []
+                'relationships' => [],
             ],
         ];
     }
@@ -150,14 +149,14 @@ class BaseRepository
 
     // region Helpers
 
-    public function sortByAttribute(string $attribute, bool $descending = false): BaseRepository
+    public function sortByAttribute(string $attribute, bool $descending = false): self
     {
         $this->sorts[] = ($descending ? '-' : '').$attribute;
 
         return $this;
     }
 
-    public function paginate(int $perPage, int $pageNumber): BaseRepository
+    public function paginate(int $perPage, int $pageNumber): self
     {
         $this->pageSize = $perPage;
         $this->page = $pageNumber;
