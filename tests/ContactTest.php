@@ -63,4 +63,30 @@ class ContactTest extends TestCase
             $contact->id
         );
     }
+
+    /** @test */
+    public function user_can_edit_a_contact(): void
+    {
+        $contact = factory(Contact::class)->make();
+
+        ParasutMock::createContact($contact);
+
+        $contactRepository = new ContactRepository();
+
+        $contact = $contactRepository->create($contact);
+
+        $newContact = factory(Contact::class)->make();
+
+        $updatedContact = $contactRepository->update($newContact);
+
+        $this->assertInstanceOf(
+            Contact::class,
+            $updatedContact
+        );
+
+        $this->assertEquals(
+            $updatedContact->name,
+            $newContact->name
+        );
+    }
 }
