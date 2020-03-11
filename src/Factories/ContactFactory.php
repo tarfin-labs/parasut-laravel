@@ -7,7 +7,7 @@ use TarfinLabs\Parasut\Models\Contact;
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-$factory->define(Contact::class, function (Faker $faker, array $attributes) {
+$factory->define(Contact::class, function (Faker $faker) {
     return [
         'email'        => $faker->email,
         'name'         => $faker->name.' #TEST#',
@@ -27,7 +27,7 @@ $factory->define(Contact::class, function (Faker $faker, array $attributes) {
     ];
 });
 
-$factory->state(Contact::class, 'with-response', function (Faker $faker, array $attributes) {
+$factory->state(Contact::class, 'with-response', function (Faker $faker) {
     return [
         'balance'                      => $faker->randomFloat(4),
         'trl_balance'                  => $faker->randomFloat(4),
