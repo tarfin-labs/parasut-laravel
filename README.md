@@ -1,8 +1,9 @@
 # Parasut-Laravel Package
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/tarfinlabs/parasut-laravel.svg?style=flat-square)](https://packagist.org/packages/tarfinlabs/parasut-laravel)
-[![Build Status](https://img.shields.io/travis/tarfinlabs/parasut-laravel/master.svg?style=flat-square)](https://travis-ci.org/tarfinlabs/parasut-laravel)
-[![Quality Score](https://img.shields.io/scrutinizer/g/tarfinlabs/parasut-laravel.svg?style=flat-square)](https://scrutinizer-ci.com/g/tarfinlabs/parasut-laravel)
+[![Build Status](https://scrutinizer-ci.com/g/tarfin-labs/parasut-laravel/badges/build.png?b=master)](https://scrutinizer-ci.com/g/tarfin-labs/parasut-laravel/build-status/master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/tarfin-labs/parasut-laravel/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/tarfin-labs/parasut-laravel/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/tarfin-labs/parasut-laravel/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/tarfin-labs/parasut-laravel/?branch=master)
 [![Total Downloads](https://img.shields.io/packagist/dt/tarfinlabs/parasut-laravel.svg?style=flat-square)](https://packagist.org/packages/tarfinlabs/parasut-laravel)
 
 [Paraşüt](https://www.parasut.com) integration for Laravel 6.0+ and PHP 7.2+.
