@@ -2,10 +2,10 @@
 
 namespace TarfinLabs\Parasut\Tests;
 
-use Faker\Factory;
 use Faker\Generator;
 use Orchestra\Testbench\TestCase as Orchestra;
 use TarfinLabs\Parasut\ParasutServiceProvider;
+use Faker\Factory;
 
 abstract class TestCase extends Orchestra
 {
@@ -15,7 +15,9 @@ abstract class TestCase extends Orchestra
     {
         parent::setUp();
 
-        $this->faker = Factory::create('tr_TR');
+        config()->set('app.faker_locale', 'tr_TR');
+
+        $this->faker = Factory::create();
     }
 
     protected function getPackageProviders($app): array
