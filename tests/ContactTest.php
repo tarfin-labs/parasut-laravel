@@ -24,7 +24,9 @@ class ContactTest extends TestCase
     /** @test */
     public function user_can_create_a_new_contact(): void
     {
-        $contact = factory(Contact::class)->make();
+        $contact = factory(Contact::class)
+            ->states(['creation', 'response'])
+            ->make();
 
         ContactMock::create($contact);
 
@@ -66,7 +68,9 @@ class ContactTest extends TestCase
     /** @test */
     public function user_can_edit_a_contact(): void
     {
-        $contact = factory(Contact::class)->make();
+        $contact = factory(Contact::class)
+            ->states(['creation', 'response'])
+            ->make();
 
         ContactMock::create($contact);
         $contactRepository = new ContactRepository();
@@ -92,7 +96,9 @@ class ContactTest extends TestCase
     /** @test */
     public function user_can_delete_a_contact(): void
     {
-        $contact = factory(Contact::class)->make();
+        $contact = factory(Contact::class)
+            ->states(['creation', 'response'])
+            ->make();
 
         ContactMock::create($contact);
         $contactRepository = new ContactRepository();
