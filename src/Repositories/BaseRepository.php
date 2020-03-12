@@ -6,15 +6,16 @@ use Illuminate\Database\Eloquent\Collection;
 use TarfinLabs\Parasut\API\ClientGateway;
 use TarfinLabs\Parasut\Enums\HttpMethods;
 use TarfinLabs\Parasut\Models\BaseModel;
+use TarfinLabs\Parasut\Repositories\Meta\BaseMeta;
 
-class BaseRepository
+abstract class BaseRepository
 {
     protected ClientGateway $clientGateway;
 
     protected string $endpoint;
     protected string $model;
 
-    protected Meta $meta;
+    protected $meta;
     protected Links $links;
 
     protected array $sorts = [];
@@ -43,7 +44,7 @@ class BaseRepository
             $this->pageSize ?? null
         );
 
-        $this->meta = new Meta($rawData['meta']);
+        $this->meta = $this->createMeta($rawData['meta']);
         $this->links = new Links($rawData['links']);
 
         $this->removeFirstSushiModel();
@@ -195,6 +196,11 @@ class BaseRepository
         $this->page = $pageNumber;
 
         return $this;
+    }
+
+    protected static function createMeta(array $meta): BaseMeta
+    {
+        return BaseMeta::create($meta);
     }
 
     // endregion

@@ -33,15 +33,17 @@ class ParasutMock
         ]);
     }
 
-    private static function generateMeta($faker, string $resource): array
+    private static function generateMeta($faker, string $resource, ?array $extraMeta = null): array
     {
-        return [
+        $meta = [
             'current_page' => $faker->numberBetween(1, 10),
             'total_pages'  => $faker->numberBetween(11, 100),
             'total_count'  => $faker->numberBetween(100, 1000),
             'per_page'     => $faker->numberBetween(1, 10),
             'export_url'   => "https://api.parasut.com/v4/{$faker->numberBetween(1000, 9999)}/{$resource}/export",
         ];
+
+        return array_merge($meta, $extraMeta);
     }
 
     private static function generateLinks($faker, string $resource): array
@@ -149,7 +151,10 @@ class ParasutMock
         }
 
         $data['links'] = self::generateLinks($faker, 'contacts');
-        $data['meta'] = self::generateMeta($faker, 'contacts');
+        $data['meta'] = self::generateMeta($faker, 'contacts', [
+            'payable_total' => $faker->randomFloat(2, 100, 1000),
+            'collectible_total' => $faker->randomFloat(2, 100, 1000),
+        ]);
 
         return $data;
     }

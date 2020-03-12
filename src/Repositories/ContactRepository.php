@@ -3,6 +3,8 @@
 namespace TarfinLabs\Parasut\Repositories;
 
 use TarfinLabs\Parasut\Models\Contact;
+use TarfinLabs\Parasut\Repositories\Meta\BaseMeta;
+use TarfinLabs\Parasut\Repositories\Meta\ContactMeta;
 
 class ContactRepository extends BaseRepository
 {
@@ -93,6 +95,15 @@ class ContactRepository extends BaseRepository
         $this->includes[] = 'contact_people';
 
         return $this;
+    }
+
+    // endregion
+
+    // region Meta
+
+    protected static function createMeta(array $meta): BaseMeta
+    {
+        return new ContactMeta($meta);
     }
 
     // endregion
