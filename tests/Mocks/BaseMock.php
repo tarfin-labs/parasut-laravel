@@ -10,12 +10,12 @@ use TarfinLabs\Parasut\Models\Contact;
 
 class BaseMock
 {
-    private static function getJsonContentType(): array
+    protected static function getJsonContentType(): array
     {
         return ['content-type' => 'application/json; charset=utf-8'];
     }
 
-    private static function getAuthenticationUrl(): string
+    protected static function getAuthenticationUrl(): string
     {
         return implode('/', [
             config('parasut.api_url'),
@@ -23,7 +23,7 @@ class BaseMock
         ]);
     }
 
-    private static function getResourceUrl(string $resource): string
+    protected static function getResourceUrl(string $resource): string
     {
         return implode('/', [
             config('parasut.api_url'),
@@ -33,7 +33,7 @@ class BaseMock
         ]);
     }
 
-    private static function generateMeta($faker, string $resource, ?array $extraMeta = null): array
+    protected static function generateMeta($faker, string $resource, ?array $extraMeta = null): array
     {
         $meta = [
             'current_page' => $faker->numberBetween(1, 10),
@@ -46,7 +46,7 @@ class BaseMock
         return array_merge($meta, $extraMeta);
     }
 
-    private static function generateLinks($faker, string $resource): array
+    protected static function generateLinks($faker, string $resource): array
     {
         return [
             'self' => "https://api.parasut.com/v4/141099/{$resource}?page%5Bnumber%5D={$faker->numberBetween(1, 10)}&page%5Bsize%5D={$faker->numberBetween(1, 10)}",
@@ -66,7 +66,7 @@ class BaseMock
         ]);
     }
 
-    private static function fakeAuthenticationResponse(): array
+    protected static function fakeAuthenticationResponse(): array
     {
         return [
             'access_token'  => 'fake-access-token',
@@ -92,7 +92,7 @@ class BaseMock
         ]);
     }
 
-    private static function allContactsResponse(int $count = 3): array
+    protected static function allContactsResponse(int $count = 3): array
     {
         $faker = Factory::create('tr_TR');
 
@@ -159,7 +159,7 @@ class BaseMock
         return $data;
     }
 
-    private static function createContactResponse(?Contact $contact): array
+    protected static function createContactResponse(?Contact $contact): array
     {
         $faker = Factory::create('tr_TR');
 
