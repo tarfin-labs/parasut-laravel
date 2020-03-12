@@ -46,8 +46,7 @@ class BaseRepository
         $this->meta = new Meta($rawData['meta']);
         $this->links = new Links($rawData['links']);
 
-        // TODO: Find a way to remove initilize model with sushi without a draft record creation
-        $this->model::first()->delete();
+        $this->removeFirstSushiModel();
 
         $this->model::insert($this->multipleRawDataToAttributes($rawData['data']));
 
@@ -69,6 +68,7 @@ class BaseRepository
 
         $attributes = $this->rawDataToAttributes($rawData['data']);
 
+        $this->removeFirstSushiModel();
         $this->model::insert($attributes);
 
         return $this->model::find($attributes['id']);
@@ -116,7 +116,7 @@ class BaseRepository
 
     public function delete(BaseModel $model): bool
     {
-        $rawData = $this->clientGateway->send(
+        $this->clientGateway->send(
             HttpMethods::DELETE,
             $this->endpoint.'/'.$model->id,
             null,
@@ -153,8 +153,6 @@ class BaseRepository
         ];
     }
 
-    // TODO: Merge `rawDataToAttributes()` and `multipleRawDataToAttributes()`
-
     protected function rawDataToAttributes(array $rawData): array
     {
         $mappings = [];
@@ -170,20 +168,19 @@ class BaseRepository
     protected function multipleRawDataToAttributes(array $rawData): array
     {
         return array_map(function ($item) {
-            $mappings = [];
-            $mappings['id'] = $item['id'];
-
-            foreach ((new $this->model)->getFillable() as $field) {
-                $mappings[$field] = $item['attributes'][$field];
-            }
-
-            return $mappings;
+            return $this->rawDataToAttributes($item);
         }, $rawData);
     }
 
     // endregion
 
     // region Helpers
+
+    protected function removeFirstSushiModel(): void
+    {
+        // TODO: Find a way to remove initilize model with sushi without a draft record creation
+        $this->model::first()->delete();
+    }
 
     public function sortByAttribute(string $attribute, bool $descending = false): self
     {

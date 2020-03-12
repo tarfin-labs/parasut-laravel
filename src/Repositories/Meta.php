@@ -11,6 +11,7 @@ class Meta
     public string $exportUrl;
 
     // TODO: Look if other models has `payable_total` and `collectible_total` attributes
+    // TODO: They don't have that attributes
 
     public function __construct(array $meta)
     {

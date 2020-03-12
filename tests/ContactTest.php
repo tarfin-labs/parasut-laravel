@@ -2,7 +2,6 @@
 
 namespace TarfinLabs\Parasut\Tests;
 
-use Faker\Factory;
 use TarfinLabs\Parasut\Models\Contact;
 use TarfinLabs\Parasut\Repositories\ContactRepository;
 use TarfinLabs\Parasut\Tests\Mocks\ParasutMock;

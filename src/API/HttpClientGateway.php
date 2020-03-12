@@ -16,7 +16,6 @@ use TarfinLabs\Parasut\Exceptions\UnprocessableEntityException;
 class HttpClientGateway implements ClientGateway
 {
     // TODO: Cache tokens
-    // TODO: Move URL's from config to consts
 
     private string $grantType;
     private string $clientId;
