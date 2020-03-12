@@ -74,7 +74,12 @@ class HttpClientGateway implements ClientGateway
      * Authenticate user and get API tokens from parasut.com.
      *
      * @return bool
-     * @throws \Illuminate\Http\Client\RequestException
+     * @throws \TarfinLabs\Parasut\Exceptions\BadRequestException
+     * @throws \TarfinLabs\Parasut\Exceptions\ForbiddenException
+     * @throws \TarfinLabs\Parasut\Exceptions\NotFoundException
+     * @throws \TarfinLabs\Parasut\Exceptions\TooManyRequestsException
+     * @throws \TarfinLabs\Parasut\Exceptions\UnauthorizedException
+     * @throws \TarfinLabs\Parasut\Exceptions\UnprocessableEntityException
      */
     public function authenticate(): bool
     {
@@ -101,7 +106,7 @@ class HttpClientGateway implements ClientGateway
             return true;
         }
 
-        $response->throw()->json();
+        $this->catchException($response);
     }
 
     protected function buildHttpQuery(
