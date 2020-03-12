@@ -4,8 +4,8 @@ namespace TarfinLabs\Parasut\Tests\Mocks;
 
 use Faker\Factory;
 use Illuminate\Http\Response;
-use TarfinLabs\Parasut\Models\Contact;
 use TarfinLabs\Parasut\Models\BaseModel;
+use TarfinLabs\Parasut\Models\Contact;
 
 class ContactMock extends BaseMock
 {
