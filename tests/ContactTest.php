@@ -89,4 +89,19 @@ class ContactTest extends TestCase
             $newContact->name
         );
     }
+
+    /** @test */
+    public function user_can_delete_a_contact(): void
+    {
+        $contact = factory(Contact::class)->make();
+
+        ParasutMock::createContact($contact);
+        $contactRepository = new ContactRepository();
+        $contact = $contactRepository->create($contact);
+
+        ParasutMock::deleteContact($contact);
+        $result = $contactRepository->delete($contact);
+
+        $this->assertTrue($result);
+    }
 }
