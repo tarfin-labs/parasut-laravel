@@ -6,6 +6,7 @@ use Faker\Factory;
 use Illuminate\Http\Response;
 use TarfinLabs\Parasut\Models\BaseModel;
 use TarfinLabs\Parasut\Models\Contact;
+use TarfinLabs\Parasut\Enums\ResourceNames;
 
 class ContactMock extends BaseMock
 {
@@ -16,7 +17,7 @@ class ContactMock extends BaseMock
         $response = self::generateResponseMultiple();
 
         self::fakeHttp(
-            'contacts',
+            ResourceNames::CONTACT,
             $response,
             Response::HTTP_OK
         );
@@ -27,7 +28,7 @@ class ContactMock extends BaseMock
         self::fakeAuthentication();
 
         self::fakeHttp(
-            'contacts',
+            ResourceNames::CONTACT,
             self::generateResponse($contact),
             Response::HTTP_OK
         );
@@ -53,7 +54,7 @@ class ContactMock extends BaseMock
         self::fakeAuthentication();
 
         self::fakeHttp(
-            'contacts'.'/'.$contact->id,
+            ResourceNames::CONTACT.'/'.$contact->id,
             self::generateResponse($contact),
             Response::HTTP_OK
         );
@@ -64,7 +65,7 @@ class ContactMock extends BaseMock
         self::fakeAuthentication();
 
         self::fakeHttp(
-            'contacts'.'/'.$contact->id,
+            ResourceNames::CONTACT.'/'.$contact->id,
             [[]],
             Response::HTTP_OK
         );
@@ -72,12 +73,12 @@ class ContactMock extends BaseMock
 
     public static function generateResponse(BaseModel $model = null): array
     {
-        return self::response($model, Contact::class, 'contacts');
+        return self::response($model, Contact::class, ResourceNames::CONTACT);
     }
 
     public static function generateResponseMultiple(int $count = 3): array
     {
-        return self::responseMultiple($count, Contact::class, 'contacts', self::getExtraMeta());
+        return self::responseMultiple($count, Contact::class, ResourceNames::CONTACT, self::getExtraMeta());
     }
 
     public static function getExtraMeta(): array

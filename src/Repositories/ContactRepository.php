@@ -3,12 +3,13 @@
 namespace TarfinLabs\Parasut\Repositories;
 
 use TarfinLabs\Parasut\Models\Contact;
+use TarfinLabs\Parasut\Enums\ResourceNames;
 use TarfinLabs\Parasut\Repositories\Meta\BaseMeta;
 use TarfinLabs\Parasut\Repositories\Meta\ContactMeta;
 
 class ContactRepository extends BaseRepository
 {
-    protected string $endpoint = 'contacts';
+    protected string $endpoint = ResourceNames::CONTACT;
     protected string $model = Contact::class;
 
     // region Sorts
