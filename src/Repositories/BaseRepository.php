@@ -35,7 +35,7 @@ abstract class BaseRepository
     {
         $rawData = $this->clientGateway->send(
             HttpMethods::GET,
-            $this->endpoint,
+            [$this->endpoint],
             $this->filters,
             $this->sorts,
             $this->includes,
@@ -58,7 +58,7 @@ abstract class BaseRepository
     {
         $rawData = $this->clientGateway->send(
             HttpMethods::GET,
-            $this->endpoint.'/'.$id,
+            [$this->endpoint, $id],
             null,
             null,
             $this->includes,
@@ -79,7 +79,7 @@ abstract class BaseRepository
     {
         $rawData = $this->clientGateway->send(
             HttpMethods::POST,
-            $this->endpoint,
+            [$this->endpoint],
             null,
             null,
             $this->includes,
@@ -99,7 +99,7 @@ abstract class BaseRepository
     {
         $rawData = $this->clientGateway->send(
             HttpMethods::PUT,
-            $this->endpoint.'/'.$model->id,
+            [$this->endpoint, $model->id],
             null,
             null,
             $this->includes,
@@ -119,7 +119,7 @@ abstract class BaseRepository
     {
         $this->clientGateway->send(
             HttpMethods::DELETE,
-            $this->endpoint.'/'.$model->id,
+            [$this->endpoint, $model->id],
             null,
             null,
             null,

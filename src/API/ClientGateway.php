@@ -8,7 +8,7 @@ interface ClientGateway
 {
     public function send(
         string $method,
-        string $endpoint,
+        array $endpoints,
         array $filters = null,
         array $sorts = null,
         array $includes = null,

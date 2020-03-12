@@ -85,7 +85,8 @@ class HttpClientGateway implements ClientGateway
         $response = Http::asForm()
                         ->post(
                             implode('/', [
-                                config('parasut.api_url'), config('parasut.token_url'),
+                                config('parasut.api_url'),
+                                config('parasut.token_url'),
                             ]),
                             [
                                 'grant_type'    => $this->grantType,
@@ -127,7 +128,7 @@ class HttpClientGateway implements ClientGateway
 
     public function send(
         string $method,
-        string $endpoint,
+        array $endpoints,
         array $filters = null,
         array $sorts = null,
         array $includes = null,
@@ -135,7 +136,8 @@ class HttpClientGateway implements ClientGateway
         ?int $page,
         ?int $pageSize
     ): ?array {
-        $url = implode('/', [$this->baseEntpoint, $endpoint]);
+        $endpointsUrl = implode('/', $endpoints);
+        $url = implode('/', [$this->baseEntpoint, $endpointsUrl]);
 
         $queryString = $this->buildHttpQuery($filters, $sorts, $includes, $page, $pageSize);
 
