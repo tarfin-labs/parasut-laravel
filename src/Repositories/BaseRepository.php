@@ -198,10 +198,7 @@ abstract class BaseRepository
         return $this;
     }
 
-    protected static function createMeta(array $meta): BaseMeta
-    {
-        return BaseMeta::create($meta);
-    }
+    abstract protected static function createMeta(array $meta): BaseMeta;
 
     // endregion
 }

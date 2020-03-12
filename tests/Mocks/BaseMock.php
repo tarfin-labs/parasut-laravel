@@ -152,8 +152,6 @@ abstract class BaseMock
 
     protected static function responseMultiple(int $count, string $class, string $resource, array $extraMeta): array
     {
-        $faker = Factory::create('tr_TR');
-
         $data = [];
 
         foreach (range(1, $count) as $index) {
