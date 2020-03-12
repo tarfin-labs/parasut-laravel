@@ -3,12 +3,13 @@
 namespace TarfinLabs\Parasut\Repositories;
 
 use TarfinLabs\Parasut\Models\Product;
+use TarfinLabs\Parasut\Enums\ResourceNames;
 use TarfinLabs\Parasut\Repositories\Meta\BaseMeta;
 use TarfinLabs\Parasut\Repositories\Meta\ProductMeta;
 
 class ProductRepository extends BaseRepository
 {
-    protected string $endpoint = 'products';
+    protected string $endpoint = ResourceNames::PRODUCT;
     protected string $model = Product::class;
 
     // region Sorts

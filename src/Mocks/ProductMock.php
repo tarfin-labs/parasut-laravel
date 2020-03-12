@@ -6,6 +6,7 @@ use Faker\Factory;
 use Illuminate\Http\Response;
 use TarfinLabs\Parasut\Models\BaseModel;
 use TarfinLabs\Parasut\Models\Product;
+use TarfinLabs\Parasut\Enums\ResourceNames;
 
 class ProductMock extends BaseMock
 {
@@ -16,7 +17,7 @@ class ProductMock extends BaseMock
         $response = self::generateResponseMultiple();
 
         self::fakeHttp(
-            'products',
+            ResourceNames::PRODUCT,
             $response,
             Response::HTTP_OK
         );
@@ -27,7 +28,7 @@ class ProductMock extends BaseMock
         self::fakeAuthentication();
 
         self::fakeHttp(
-            'products',
+            ResourceNames::PRODUCT,
             self::generateResponse($product),
             Response::HTTP_OK
         );
@@ -53,7 +54,7 @@ class ProductMock extends BaseMock
         self::fakeAuthentication();
 
         self::fakeHttp(
-            'products'.'/'.$product->id,
+            ResourceNames::PRODUCT.'/'.$product->id,
             self::generateResponse($product),
             Response::HTTP_OK
         );
@@ -64,7 +65,7 @@ class ProductMock extends BaseMock
         self::fakeAuthentication();
 
         self::fakeHttp(
-            'products'.'/'.$product->id,
+            ResourceNames::PRODUCT.'/'.$product->id,
             [[]],
             Response::HTTP_OK
         );
@@ -74,12 +75,12 @@ class ProductMock extends BaseMock
 
     public static function generateResponse(BaseModel $model = null): array
     {
-        return self::response($model, Product::class, 'products');
+        return self::response($model, Product::class, ResourceNames::PRODUCT);
     }
 
     public static function generateResponseMultiple(int $count = 3): array
     {
-        return self::responseMultiple($count, Product::class, 'products', self::getExtraMeta());
+        return self::responseMultiple($count, Product::class, ResourceNames::PRODUCT, self::getExtraMeta());
     }
 
     public static function getExtraMeta(): array
