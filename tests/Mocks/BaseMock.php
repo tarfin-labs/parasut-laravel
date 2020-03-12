@@ -2,6 +2,7 @@
 
 namespace TarfinLabs\Parasut\Tests\Mocks;
 
+use Faker\Generator as Faker;
 use Faker\Factory;
 use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
@@ -26,6 +27,8 @@ abstract class BaseMock
     abstract public static function generateResponse(BaseModel $model = null): array;
 
     abstract public static function generateResponseMultiple(int $count = 3): array;
+
+    abstract public static function getExtraMeta(): array;
 
     // endregion
 
@@ -65,8 +68,10 @@ abstract class BaseMock
         ]);
     }
 
-    protected static function generateMeta($faker, string $resource, ?array $extraMeta = null): array
+    protected static function generateMeta(string $resource, ?array $extraMeta = null): array
     {
+        $faker = Factory::create('tr_TR');
+
         $meta = [
             'current_page' => $faker->numberBetween(1, 10),
             'total_pages'  => $faker->numberBetween(11, 100),
@@ -78,8 +83,10 @@ abstract class BaseMock
         return array_merge($meta, $extraMeta);
     }
 
-    protected static function generateLinks($faker, string $resource): array
+    protected static function generateLinks(string $resource): array
     {
+        $faker = Factory::create('tr_TR');
+
         return [
             'self' => "https://api.parasut.com/v4/141099/{$resource}?page%5Bnumber%5D={$faker->numberBetween(1, 10)}&page%5Bsize%5D={$faker->numberBetween(1, 10)}",
             'next' => "https://api.parasut.com/v4/141099/{$resource}?page%5Bnumber%5D={$faker->numberBetween(1, 10)}&page%5Bsize%5D={$faker->numberBetween(1, 10)}",
@@ -161,7 +168,7 @@ abstract class BaseMock
         ];
     }
 
-    protected static function responseMultiple(int $count = 3, string $class, string $resource): array
+    protected static function responseMultiple(int $count = 3, string $class, string $resource, array $extraMeta): array
     {
         $faker = Factory::create('tr_TR');
 
@@ -177,11 +184,8 @@ abstract class BaseMock
             ];
         }
 
-        $data['links'] = self::generateLinks($faker, $resource);
-        $data['meta'] = self::generateMeta($faker, $resource, [
-            'payable_total' => $faker->randomFloat(2, 100, 1000),
-            'collectible_total' => $faker->randomFloat(2, 100, 1000),
-        ]);
+        $data['links'] = self::generateLinks($resource);
+        $data['meta'] = self::generateMeta($resource, $extraMeta);
 
         return $data;
     }

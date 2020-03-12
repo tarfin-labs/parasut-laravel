@@ -2,6 +2,7 @@
 
 namespace TarfinLabs\Parasut\Tests\Mocks;
 
+use Faker\Factory;
 use Illuminate\Http\Response;
 use TarfinLabs\Parasut\Models\Contact;
 use TarfinLabs\Parasut\Models\BaseModel;
@@ -76,6 +77,16 @@ class ContactMock extends BaseMock
 
     public static function generateResponseMultiple(int $count = 3): array
     {
-        return self::responseMultiple($count, Contact::class, 'contacts');
+        return self::responseMultiple($count, Contact::class, 'contacts', self::getExtraMeta());
+    }
+
+    public static function getExtraMeta(): array
+    {
+        $faker = Factory::create('tr_TR');
+
+        return [
+            'payable_total' => $faker->randomFloat(2, 100, 1000),
+            'collectible_total' => $faker->randomFloat(2, 100, 1000),
+        ];
     }
 }
