@@ -224,6 +224,19 @@ class ParasutMock
         ]);
     }
 
+    public static function updateContact(Contact $contact): void
+    {
+        self::fakeAuthentication();
+
+        Http::fake([
+            self::getResourceUrl('contacts' . '/' . $contact->id) => Http::response(
+                self::createContactResponse($contact),
+                Response::HTTP_OK,
+                self::getJsonContentType()
+            ),
+        ]);
+    }
+
     public static function findContact(): int
     {
         self::fakeAuthentication();

@@ -70,13 +70,13 @@ class ContactTest extends TestCase
         $contact = factory(Contact::class)->make();
 
         ParasutMock::createContact($contact);
-
         $contactRepository = new ContactRepository();
-
         $contact = $contactRepository->create($contact);
 
         $newContact = factory(Contact::class)->make();
+        $newContact->id = $contact->id;
 
+        ParasutMock::updateContact($contact);
         $updatedContact = $contactRepository->update($newContact);
 
         $this->assertInstanceOf(
