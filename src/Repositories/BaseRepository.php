@@ -2,10 +2,10 @@
 
 namespace TarfinLabs\Parasut\Repositories;
 
-use TarfinLabs\Parasut\Models\BaseModel;
-use TarfinLabs\Parasut\Enums\HttpMethods;
-use TarfinLabs\Parasut\API\ClientGateway;
 use Illuminate\Database\Eloquent\Collection;
+use TarfinLabs\Parasut\API\ClientGateway;
+use TarfinLabs\Parasut\Enums\HttpMethods;
+use TarfinLabs\Parasut\Models\BaseModel;
 
 class BaseRepository
 {

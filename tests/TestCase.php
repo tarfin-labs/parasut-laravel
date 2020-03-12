@@ -2,10 +2,10 @@
 
 namespace TarfinLabs\Parasut\Tests;
 
+use Faker\Factory;
 use Faker\Generator;
 use Orchestra\Testbench\TestCase as Orchestra;
 use TarfinLabs\Parasut\ParasutServiceProvider;
-use Faker\Factory;
 
 abstract class TestCase extends Orchestra
 {

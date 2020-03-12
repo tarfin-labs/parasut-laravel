@@ -229,7 +229,7 @@ class ParasutMock
         self::fakeAuthentication();
 
         Http::fake([
-            self::getResourceUrl('contacts' . '/' . $contact->id) => Http::response(
+            self::getResourceUrl('contacts'.'/'.$contact->id) => Http::response(
                 self::createContactResponse($contact),
                 Response::HTTP_OK,
                 self::getJsonContentType()
@@ -242,7 +242,7 @@ class ParasutMock
         self::fakeAuthentication();
 
         Http::fake([
-            self::getResourceUrl('contacts' . '/' . $contact->id) => Http::response(
+            self::getResourceUrl('contacts'.'/'.$contact->id) => Http::response(
                 [[]],
                 Response::HTTP_NO_CONTENT,
                 self::getJsonContentType()
