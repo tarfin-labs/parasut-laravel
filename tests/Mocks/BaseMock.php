@@ -8,7 +8,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
 use TarfinLabs\Parasut\Models\Contact;
 
-class ParasutMock
+class BaseMock
 {
     private static function getJsonContentType(): array
     {
