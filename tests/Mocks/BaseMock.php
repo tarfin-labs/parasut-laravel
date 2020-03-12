@@ -7,7 +7,6 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
 use TarfinLabs\Parasut\Models\BaseModel;
-use TarfinLabs\Parasut\Models\Contact;
 
 abstract class BaseMock
 {
@@ -15,13 +14,13 @@ abstract class BaseMock
 
     abstract public static function all(int $count = 3): void;
 
-    abstract public static function create(BaseModel $contact): void;
+    abstract public static function create(BaseModel $model): void;
 
     abstract public static function find(): int;
 
-    abstract public static function update(Contact $contact): void;
+    abstract public static function update(BaseModel $model): void;
 
-    abstract public static function delete(Contact $contact): void;
+    abstract public static function delete(BaseModel $model): void;
 
     abstract public static function generateResponse(BaseModel $model = null): array;
 
@@ -119,13 +118,13 @@ abstract class BaseMock
         ];
     }
 
-    protected static function getMeta(Contact $contact = null): array
+    protected static function getMeta(BaseModel $model = null): array
     {
         $faker = Factory::create('tr_TR');
 
         return [
-            'created_at' => $contact->created_at ?? $faker->iso8601,
-            'updated_at' => $contact->updated_at ?? $faker->iso8601,
+            'created_at' => $model->created_at ?? $faker->iso8601,
+            'updated_at' => $model->updated_at ?? $faker->iso8601,
         ];
     }
 
