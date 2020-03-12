@@ -121,7 +121,7 @@ class HttpClientGateway implements ClientGateway
             ]));
     }
 
-    public function call(
+    public function send(
         string $method,
         string $endpoint,
         array $filters = null,

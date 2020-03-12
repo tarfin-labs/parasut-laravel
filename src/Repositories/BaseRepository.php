@@ -2,10 +2,10 @@
 
 namespace TarfinLabs\Parasut\Repositories;
 
-use Illuminate\Database\Eloquent\Collection;
-use TarfinLabs\Parasut\API\ClientGateway;
-use TarfinLabs\Parasut\Enums\HttpMethods;
 use TarfinLabs\Parasut\Models\BaseModel;
+use TarfinLabs\Parasut\Enums\HttpMethods;
+use TarfinLabs\Parasut\API\ClientGateway;
+use Illuminate\Database\Eloquent\Collection;
 
 class BaseRepository
 {
@@ -32,7 +32,7 @@ class BaseRepository
 
     public function all(): Collection
     {
-        $rawData = $this->clientGateway->call(
+        $rawData = $this->clientGateway->send(
             HttpMethods::GET,
             $this->endpoint,
             $this->filters,
@@ -56,7 +56,7 @@ class BaseRepository
 
     public function find(int $id): ?BaseModel
     {
-        $rawData = $this->clientGateway->call(
+        $rawData = $this->clientGateway->send(
             HttpMethods::GET,
             $this->endpoint.'/'.$id,
             null,
@@ -76,7 +76,7 @@ class BaseRepository
 
     public function create(BaseModel $model): BaseModel
     {
-        $rawData = $this->clientGateway->call(
+        $rawData = $this->clientGateway->send(
             HttpMethods::POST,
             $this->endpoint,
             null,
