@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Facade;
 /**
  * @see \TarfinLabs\Parasut\Skeleton\SkeletonClass
  */
-class Contact extends Facade
+class ContactFacade extends Facade
 {
     /**
      * Get the registered name of the component.
