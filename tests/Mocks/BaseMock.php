@@ -107,23 +107,6 @@ abstract class BaseMock
         ];
     }
 
-    // endregion
-
-    // region Public Functions
-
-    public static function fakeAuthentication(): void
-    {
-        Http::fake([
-            self::getAuthenticationUrl() => Http::response(
-                self::fakeAuthenticationResponse(),
-                Response::HTTP_OK,
-                self::getJsonContentType()
-            ),
-        ]);
-    }
-
-    // endregion
-
     protected static function getRelationships(): array
     {
         return [
@@ -189,4 +172,21 @@ abstract class BaseMock
 
         return $data;
     }
+
+    // endregion
+
+    // region Public Functions
+
+    public static function fakeAuthentication(): void
+    {
+        Http::fake([
+            self::getAuthenticationUrl() => Http::response(
+                self::fakeAuthenticationResponse(),
+                Response::HTTP_OK,
+                self::getJsonContentType()
+            ),
+        ]);
+    }
+
+    // endregion
 }
