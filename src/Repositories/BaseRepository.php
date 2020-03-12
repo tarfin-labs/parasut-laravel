@@ -94,6 +94,26 @@ class BaseRepository
         return $this->model::find($attributes['id']);
     }
 
+    public function update(BaseModel $model): ?BaseModel
+    {
+        $rawData = $this->clientGateway->send(
+            HttpMethods::PUT,
+            $this->endpoint.'/'.$model->id,
+            null,
+            null,
+            $this->includes,
+            $this->generateCreationBodyForModel($model),
+            null,
+            null
+        );
+
+        $attributes = $this->rawDataToAttributes($rawData['data']);
+
+        $model->update($attributes);
+
+        return $model;
+    }
+
     // endregion
 
     // region Supports
