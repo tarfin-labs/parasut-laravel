@@ -4,9 +4,9 @@ namespace TarfinLabs\Parasut\Mocks;
 
 use Faker\Factory;
 use Illuminate\Http\Response;
+use TarfinLabs\Parasut\Enums\ResourceNames;
 use TarfinLabs\Parasut\Models\BaseModel;
 use TarfinLabs\Parasut\Models\Contact;
-use TarfinLabs\Parasut\Enums\ResourceNames;
 
 class ContactMock extends BaseMock
 {

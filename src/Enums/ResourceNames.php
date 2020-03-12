@@ -19,15 +19,13 @@ class ResourceNames
         $url = '';
 
         foreach ($endpoints as $endpoint) {
-            if (is_string($endpoint))
-            {
+            if (is_string($endpoint)) {
                 $url = implode('/', array_filter([$url, $endpoint]));
                 continue;
             }
 
-            if (is_array($endpoint))
-            {
-                $url .=  '/'. implode('/', $endpoint);
+            if (is_array($endpoint)) {
+                $url .= '/'.implode('/', $endpoint);
                 continue;
             }
         }

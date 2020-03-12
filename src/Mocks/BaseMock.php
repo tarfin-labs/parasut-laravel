@@ -6,8 +6,8 @@ use Faker\Factory;
 use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
-use TarfinLabs\Parasut\Models\BaseModel;
 use TarfinLabs\Parasut\Enums\ResourceNames;
+use TarfinLabs\Parasut\Models\BaseModel;
 
 abstract class BaseMock
 {
