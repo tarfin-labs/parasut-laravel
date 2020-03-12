@@ -6,11 +6,11 @@
         "parasut-api",
         "accounting",
         "invoicing",
-        "tarfinlabs",
+        "tarfin-labs",
         "laravel",
         "laravel-package"
     ],
-    "homepage": "https://github.com/tarfinlabs/parasut-laravel",
+    "homepage": "https://github.com/tarfin-labs/parasut-laravel",
     "license": "MIT",
     "type": "library",
     "authors": [

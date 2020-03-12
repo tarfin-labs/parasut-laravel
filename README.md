@@ -1,10 +1,10 @@
 # Parasut-Laravel Package
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/tarfinlabs/parasut-laravel.svg?style=flat-square)](https://packagist.org/packages/tarfinlabs/parasut-laravel)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/tarfin-labs/parasut-laravel.svg?style=flat-square)](https://packagist.org/packages/tarfinlabs/parasut-laravel)
 [![Build Status](https://scrutinizer-ci.com/g/tarfin-labs/parasut-laravel/badges/build.png?b=master)](https://scrutinizer-ci.com/g/tarfin-labs/parasut-laravel/build-status/master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/tarfin-labs/parasut-laravel/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/tarfin-labs/parasut-laravel/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/tarfin-labs/parasut-laravel/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/tarfin-labs/parasut-laravel/?branch=master)
-[![Total Downloads](https://img.shields.io/packagist/dt/tarfinlabs/parasut-laravel.svg?style=flat-square)](https://packagist.org/packages/tarfinlabs/parasut-laravel)
+[![Total Downloads](https://img.shields.io/packagist/dt/tarfin-labs/parasut-laravel.svg?style=flat-square)](https://packagist.org/packages/tarfinlabs/parasut-laravel)
 
 [Paraşüt](https://www.parasut.com) integration for Laravel 6.0+ and PHP 7.2+.
 
@@ -15,7 +15,7 @@
 You can install the package via composer:
 
 ```bash
-composer require tarfinlabs/parasut-laravel
+composer require tarfin-labs/parasut-laravel
 ```
 
 ## Usage
