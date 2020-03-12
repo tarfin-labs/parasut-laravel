@@ -4,7 +4,7 @@ namespace TarfinLabs\Parasut\Tests;
 
 use TarfinLabs\Parasut\Models\Product;
 use TarfinLabs\Parasut\Repositories\ProductRepository;
-use TarfinLabs\Parasut\Tests\Mocks\ProductMock;
+use TarfinLabs\Parasut\Mocks\ProductMock;
 
 class ProductTest extends TestCase
 {
