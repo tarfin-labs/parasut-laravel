@@ -114,6 +114,22 @@ class BaseRepository
         return $model;
     }
 
+    public function delete(BaseModel $model): bool
+    {
+        $rawData = $this->clientGateway->send(
+            HttpMethods::DELETE,
+            $this->endpoint.'/'.$model->id,
+            null,
+            null,
+            null,
+            $this->generateCreationBodyForModel($model),
+            null,
+            null
+        );
+
+        return $model->delete();
+    }
+
     // endregion
 
     // region Supports
