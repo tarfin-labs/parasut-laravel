@@ -11,6 +11,24 @@ use TarfinLabs\Parasut\Models\BaseModel;
 
 abstract class BaseMock
 {
+    // region Abstract Functions
+
+    abstract public static function all(int $count = 3): void;
+
+    abstract public static function create(BaseModel $contact): void;
+
+    abstract public static function find(): int;
+
+    abstract public static function update(Contact $contact): void;
+
+    abstract public static function delete(Contact $contact): void;
+
+    abstract public static function generateResponse(BaseModel $model = null): array;
+
+    // endregion
+
+    // region Helpers
+
     protected static function fakeHttp(string $resource, array $response, int $returnStatus): void
     {
         Http::fake([
@@ -67,17 +85,6 @@ abstract class BaseMock
         ];
     }
 
-    public static function fakeAuthentication(): void
-    {
-        Http::fake([
-            self::getAuthenticationUrl() => Http::response(
-                self::fakeAuthenticationResponse(),
-                Response::HTTP_OK,
-                self::getJsonContentType()
-            ),
-        ]);
-    }
-
     protected static function fakeAuthenticationResponse(): array
     {
         return [
@@ -91,22 +98,68 @@ abstract class BaseMock
         ];
     }
 
-    // region Abstract Functions
+    // endregion
 
-    abstract public static function all(int $count = 3): void;
+    // region Public Functions
 
-    abstract public static function create(BaseModel $contact): void;
-
-    abstract public static function find(): int;
-
-    abstract public static function update(Contact $contact): void;
-
-    abstract public static function delete(Contact $contact): void;
+    public static function fakeAuthentication(): void
+    {
+        Http::fake([
+            self::getAuthenticationUrl() => Http::response(
+                self::fakeAuthenticationResponse(),
+                Response::HTTP_OK,
+                self::getJsonContentType()
+            ),
+        ]);
+    }
 
     // endregion
 
+    protected static function getRelationships(): array
+    {
+        return [
+            'category'          => ['meta' => []],
+            'price_list'        => ['meta' => []],
+            'contact_portal'    => ['meta' => []],
+            'contact_people'    => ['meta' => []],
+            'activities'        => ['meta' => []],
+            'e_invoice_inboxes' => ['meta' => []],
+            'sharings'          => ['meta' => []],
+        ];
+    }
 
-    protected static function allContactsResponse(int $count = 3): array
+    protected static function getMeta(Contact $contact = null): array
+    {
+        $faker = Factory::create('tr_TR');
+
+        return [
+            'created_at' => $contact->created_at ?? $faker->iso8601,
+            'updated_at' => $contact->updated_at ?? $faker->iso8601,
+        ];
+    }
+
+    protected static function response(BaseModel $model = null, string $class, string $resource): array
+    {
+        $faker = Factory::create('tr_TR');
+
+        $attributes = empty($model)
+            ? factory($class)
+                ->states(['creation', 'response'])
+                ->raw()
+            : $model->getAttributes();
+
+        return [
+            'data' => [
+                'id'            => (string) $faker->numberBetween(10000, 99999),
+                'type'          => $resource,
+                'attributes'    => $attributes,
+                'relationships' => self::getRelationships(),
+                'meta'          => self::getMeta($model),
+            ],
+        ];
+    }
+
+    protected static function responseMultiple(int $count = 3, string $class, string $resource): array
     {
         $faker = Factory::create('tr_TR');
 
@@ -115,118 +168,19 @@ abstract class BaseMock
         foreach (range(1, $count) as $index) {
             $data['data'][$index - 1] = [
                 'id'            => $index,
-                'type'          => 'contacts',
-                'attributes'    => [
-                    'created_at'                   => $faker->iso8601,
-                    'updated_at'                   => $faker->iso8601,
-                    'contact_type'                 => $faker->randomElement(['person', 'company']),
-                    'name'                         => $faker->name,
-                    'email'                        => $faker->email,
-                    'short_name'                   => null,
-                    'balance'                      => $faker->randomFloat(4),
-                    'trl_balance'                  => $faker->randomFloat(4),
-                    'usd_balance'                  => $faker->randomFloat(4),
-                    'eur_balance'                  => $faker->randomFloat(4),
-                    'gbp_balance'                  => $faker->randomFloat(4),
-                    'tax_number'                   => $faker->numerify('###########'),
-                    'tax_office'                   => "{$faker->city} Vergi Dairesi",
-                    'archived'                     => $faker->boolean,
-                    'account_type'                 => $faker->randomElement(['customer', 'supplier']),
-                    'city'                         => $faker->city,
-                    'district'                     => $faker->city,
-                    'address'                      => $faker->address,
-                    'phone'                        => $faker->phoneNumber,
-                    'fax'                          => $faker->phoneNumber,
-                    'is_abroad'                    => $faker->boolean,
-                    'term_days'                    => null,
-                    'invoicing_preferences'        => [],
-                    'sharings_count'               => 0,
-                    'ibans'                        => [],
-                    'exchange_rate_type'           => 'buying',
-                    'iban'                         => null,
-                    'sharing_preview_url'          => "https://uygulama.parasut.com/{$faker->numberBetween(1000, 9999)}/portal/preview/{$faker->numberBetween(1000, 9999)}",
-                    'sharing_preview_path'         => "/{$faker->numberBetween(1000, 9999)}/portal/preview/{$faker->numberBetween(1000, 9999)}",
-                    'payment_reminder_preview_url' => "https://uygulama.parasut.com/{$faker->numberBetween(1000, 9999)}/portal/preview/{$faker->numberBetween(1000, 9999)}/odeme-hatirlat",
-                ],
-                'relationships' => [
-                    'category'          => ['meta' => []],
-                    'price_list'        => ['meta' => []],
-                    'contact_portal'    => ['meta' => []],
-                    'contact_people'    => ['meta' => []],
-                    'activities'        => ['meta' => []],
-                    'e_invoice_inboxes' => ['meta' => []],
-                    'sharings'          => ['meta' => []],
-                ],
-                'meta'          => [
-                    'created_at' => $faker->iso8601,
-                    'updated_at' => $faker->iso8601,
-                ],
+                'type'          => $resource,
+                'attributes'    => factory($class)->states(['creation', 'response'])->raw(),
+                'relationships' => self::getRelationships(),
+                'meta'          => self::getMeta(),
             ];
         }
 
-        $data['links'] = self::generateLinks($faker, 'contacts');
-        $data['meta'] = self::generateMeta($faker, 'contacts', [
+        $data['links'] = self::generateLinks($faker, $resource);
+        $data['meta'] = self::generateMeta($faker, $resource, [
             'payable_total' => $faker->randomFloat(2, 100, 1000),
             'collectible_total' => $faker->randomFloat(2, 100, 1000),
         ]);
 
         return $data;
-    }
-
-    protected static function createContactResponse(Contact $contact = null): array
-    {
-        $faker = Factory::create('tr_TR');
-
-        return [
-            'data' => [
-                'id'            => (string) $faker->numberBetween(10000, 99999),
-                'type'          => 'contacts',
-                'attributes'    => [
-                    'created_at'                   => $contact->created_at ?? $faker->iso8601,
-                    'updated_at'                   => $contact->updated_at ?? $faker->iso8601,
-                    'contact_type'                 => $contact->contact_type ?? 'company',
-                    'name'                         => $contact->name ?? $faker->name,
-                    'email'                        => $contact->email ?? null,
-                    'short_name'                   => $contact->short_name ?? null,
-                    'balance'                      => $contact->balance ?? '0.0',
-                    'trl_balance'                  => $contact->trl_balance ?? '0.0',
-                    'usd_balance'                  => $contact->usd_balance ?? '0.0',
-                    'eur_balance'                  => $contact->eur_balance ?? '0.0',
-                    'gbp_balance'                  => $contact->gbp_balance ?? '0.0',
-                    'tax_number'                   => $contact->tax_number ?? null,
-                    'tax_office'                   => $contact->tax_office ?? null,
-                    'archived'                     => $contact->archived ?? false,
-                    'account_type'                 => $contact->account_type ?? $faker->randomElement(['customer', 'supplier']),
-                    'city'                         => $contact->city ?? null,
-                    'district'                     => $contact->district ?? null,
-                    'address'                      => $contact->address ?? null,
-                    'phone'                        => $contact->phone ?? null,
-                    'fax'                          => $contact->fax ?? null,
-                    'is_abroad'                    => $contact->is_abroad ?? false,
-                    'term_days'                    => $contact->term_days ?? null,
-                    'invoicing_preferences'        => $contact->invoicing_preferences ?? [],
-                    'sharings_count'               => $contact->sharings_count ?? 0,
-                    'ibans'                        => $contact->ibans ?? [],
-                    'exchange_rate_type'           => $contact->exchange_rate_type ?? 'buying',
-                    'iban'                         => $contact->iban ?? null,
-                    'sharing_preview_url'          => 'https://uygulama.parasut.com/'.config('parasut.company_id').'/portal/preview/'.$faker->numberBetween(1000, 9999),
-                    'sharing_preview_path'         => '/'.config('parasut.company_id').'/portal/preview/'.$faker->numberBetween(1000, 9999),
-                    'payment_reminder_preview_url' => 'https://uygulama.parasut.com/'.config('parasut.company_id').'/portal/preview/'.$faker->numberBetween(1000, 9999).'/odeme-hatirlat',
-                ],
-                'relationships' => [
-                    'category'          => ['meta' => []],
-                    'price_list'        => ['meta' => []],
-                    'contact_portal'    => ['meta' => []],
-                    'contact_people'    => ['meta' => []],
-                    'activities'        => ['meta' => []],
-                    'e_invoice_inboxes' => ['meta' => []],
-                    'sharings'          => ['meta' => []],
-                ],
-                'meta'          => [
-                    'created_at' => $contact->created_at ?? $faker->iso8601,
-                    'updated_at' => $contact->updated_at ?? $faker->iso8601,
-                ],
-            ],
-        ];
     }
 }
