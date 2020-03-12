@@ -16,8 +16,12 @@ abstract class BaseException extends Exception
      */
     public function __construct(Response $response)
     {
+        $message = array_key_exists('error', $response->json())
+            ? "{$response->json()['error']}: {$response->json()['error_description']}"
+            : "{$response->json()['errors'][0]['title']}: {$response->json()['errors'][0]['detail']}";
+
         parent::__construct(
-            "{$response->json()['errors'][0]['title']}: {$response->json()['errors'][0]['detail']}",
+            $message,
             $response->status()
         );
     }
