@@ -135,7 +135,7 @@ class HttpClientGateway implements ClientGateway
         array $body = null,
         ?int $page,
         ?int $pageSize
-    ): array {
+    ): ?array {
         $url = implode('/', [$this->baseEntpoint, $endpoint]);
 
         $queryString = $this->buildHttpQuery($filters, $sorts, $includes, $page, $pageSize);
