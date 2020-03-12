@@ -237,6 +237,19 @@ class ParasutMock
         ]);
     }
 
+    public static function deleteContact(Contact $contact): void
+    {
+        self::fakeAuthentication();
+
+        Http::fake([
+            self::getResourceUrl('contacts' . '/' . $contact->id) => Http::response(
+                [[]],
+                Response::HTTP_NO_CONTENT,
+                self::getJsonContentType()
+            ),
+        ]);
+    }
+
     public static function findContact(): int
     {
         self::fakeAuthentication();
