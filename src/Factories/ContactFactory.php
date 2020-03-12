@@ -7,12 +7,12 @@ use TarfinLabs\Parasut\Models\Contact;
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-$factory->define(Contact::class, fn(Faker $faker, array $attributes) => [
+$factory->define(Contact::class, fn (Faker $faker, array $attributes) => [
     'name'         => $attributes['name'] ?? $faker->name.'#TEST#',
     'account_type' => $attributes['account_type'] ?? $faker->randomElement(['customer', 'supplier']),
 ]);
 
-$factory->state(Contact::class, 'creation', fn(Faker $faker, array $attributes) => [
+$factory->state(Contact::class, 'creation', fn (Faker $faker, array $attributes) => [
     'email'        => $attributes['email'] ?? $faker->email,
     'name'         => $attributes['name'] ?? $faker->name.'#TEST#',
     'short_name'   => $attributes['short_name'] ?? null,
@@ -30,7 +30,7 @@ $factory->state(Contact::class, 'creation', fn(Faker $faker, array $attributes) 
     'account_type' => $attributes['account_type'] ?? $faker->randomElement(['customer', 'supplier']),
 ]);
 
-$factory->state(Contact::class, 'response', fn(Faker $faker, array $attributes) => [
+$factory->state(Contact::class, 'response', fn (Faker $faker, array $attributes) => [
     'balance'                      => $attributes['balance'] ?? $faker->randomFloat(2, 100, 9999),
     'trl_balance'                  => $attributes['trl_balance'] ?? $faker->randomFloat(2, 100, 9999),
     'usd_balance'                  => $attributes['usd_balance'] ?? $faker->randomFloat(2, 100, 9999),

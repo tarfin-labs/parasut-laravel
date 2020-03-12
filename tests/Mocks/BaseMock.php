@@ -2,13 +2,12 @@
 
 namespace TarfinLabs\Parasut\Tests\Mocks;
 
-use Faker\Generator as Faker;
 use Faker\Factory;
 use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
-use TarfinLabs\Parasut\Models\Contact;
 use TarfinLabs\Parasut\Models\BaseModel;
+use TarfinLabs\Parasut\Models\Contact;
 
 abstract class BaseMock
 {
@@ -151,7 +150,7 @@ abstract class BaseMock
         ];
     }
 
-    protected static function responseMultiple(int $count = 3, string $class, string $resource, array $extraMeta): array
+    protected static function responseMultiple(int $count, string $class, string $resource, array $extraMeta): array
     {
         $faker = Factory::create('tr_TR');
 
