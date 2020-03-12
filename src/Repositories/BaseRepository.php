@@ -15,7 +15,7 @@ abstract class BaseRepository
     protected string $endpoint;
     protected string $model;
 
-    protected $meta;
+    protected BaseMeta $meta;
     protected Links $links;
 
     protected array $sorts = [];
