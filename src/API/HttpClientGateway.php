@@ -6,6 +6,7 @@ use Illuminate\Http\Client\Response;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
 use RuntimeException;
+use TarfinLabs\Parasut\Enums\ResourceNames;
 use TarfinLabs\Parasut\Exceptions\BadRequestException;
 use TarfinLabs\Parasut\Exceptions\ForbiddenException;
 use TarfinLabs\Parasut\Exceptions\NotFoundException;
@@ -45,11 +46,11 @@ class HttpClientGateway implements ClientGateway
         $this->password = $password;
         $this->redirectUri = $redirectUri;
 
-        $this->baseEntpoint = implode('/', [
+        $this->baseEntpoint = ResourceNames::buildEndpoint(
             config('parasut.api_url'),
             config('parasut.api_version'),
-            config('parasut.company_id'),
-        ]);
+            config('parasut.company_id')
+        );
 
         $this->authenticate();
     }
@@ -84,10 +85,10 @@ class HttpClientGateway implements ClientGateway
     {
         $response = Http::asForm()
                         ->post(
-                            implode('/', [
+                            ResourceNames::buildEndpoint(
                                 config('parasut.api_url'),
-                                config('parasut.token_url'),
-                            ]),
+                                config('parasut.token_url')
+                            ),
                             [
                                 'grant_type'    => $this->grantType,
                                 'client_id'     => $this->clientId,
@@ -136,9 +137,7 @@ class HttpClientGateway implements ClientGateway
         ?int $page,
         ?int $pageSize
     ): ?array {
-        $endpointsUrl = implode('/', $endpoints);
-        $url = implode('/', [$this->baseEntpoint, $endpointsUrl]);
-
+        $url = ResourceNames::buildEndpoint($this->baseEntpoint, $endpoints);
         $queryString = $this->buildHttpQuery($filters, $sorts, $includes, $page, $pageSize);
 
         if (! empty($queryString)) {

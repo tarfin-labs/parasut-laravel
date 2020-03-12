@@ -41,7 +41,10 @@ class ContactMock extends BaseMock
         $response = self::generateResponse();
 
         self::fakeHttp(
-            'contacts/'.$response['data']['id'],
+            ResourceNames::buildEndpoint(
+                ResourceNames::CONTACT,
+                $response['data']['id']
+            ),
             $response,
             Response::HTTP_OK
         );
@@ -54,7 +57,7 @@ class ContactMock extends BaseMock
         self::fakeAuthentication();
 
         self::fakeHttp(
-            ResourceNames::CONTACT.'/'.$contact->id,
+            ResourceNames::buildEndpoint(ResourceNames::CONTACT, (string) $contact->id),
             self::generateResponse($contact),
             Response::HTTP_OK
         );
@@ -65,7 +68,7 @@ class ContactMock extends BaseMock
         self::fakeAuthentication();
 
         self::fakeHttp(
-            ResourceNames::CONTACT.'/'.$contact->id,
+            ResourceNames::buildEndpoint(ResourceNames::CONTACT, (string) $contact->id),
             [[]],
             Response::HTTP_OK
         );

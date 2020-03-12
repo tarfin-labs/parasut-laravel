@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
 use TarfinLabs\Parasut\Models\BaseModel;
+use TarfinLabs\Parasut\Enums\ResourceNames;
 
 abstract class BaseMock
 {
@@ -50,20 +51,20 @@ abstract class BaseMock
 
     protected static function getAuthenticationUrl(): string
     {
-        return implode('/', [
+        return ResourceNames::buildEndpoint(
             config('parasut.api_url'),
-            config('parasut.token_url'),
-        ]);
+            config('parasut.token_url')
+        );
     }
 
     protected static function getResourceUrl(string $resource): string
     {
-        return implode('/', [
+        return ResourceNames::buildEndpoint(
             config('parasut.api_url'),
             config('parasut.api_version'),
             config('parasut.company_id'),
             $resource,
-        ]);
+        );
     }
 
     protected static function generateMeta(string $resource, ?array $extraMeta = null): array

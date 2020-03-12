@@ -41,7 +41,7 @@ class ProductMock extends BaseMock
         $response = self::generateResponse();
 
         self::fakeHttp(
-            'products/'.$response['data']['id'],
+            ResourceNames::buildEndpoint(ResourceNames::PRODUCT, (string) $response['data']['id']),
             $response,
             Response::HTTP_OK
         );
@@ -54,7 +54,7 @@ class ProductMock extends BaseMock
         self::fakeAuthentication();
 
         self::fakeHttp(
-            ResourceNames::PRODUCT.'/'.$product->id,
+            ResourceNames::buildEndpoint(ResourceNames::PRODUCT, (string) $product->id),
             self::generateResponse($product),
             Response::HTTP_OK
         );
@@ -65,7 +65,7 @@ class ProductMock extends BaseMock
         self::fakeAuthentication();
 
         self::fakeHttp(
-            ResourceNames::PRODUCT.'/'.$product->id,
+            ResourceNames::buildEndpoint(ResourceNames::PRODUCT, (string) $product->id),
             [[]],
             Response::HTTP_OK
         );

@@ -21,12 +21,14 @@ class ResourceNames
         foreach ($endpoints as $endpoint) {
             if (is_string($endpoint))
             {
-                $url .= "{$endpoint}/";
+                $url = implode('/', array_filter([$url, $endpoint]));
+                continue;
             }
 
             if (is_array($endpoint))
             {
-                $url .= implode('/', $endpoint);
+                $url .=  '/'. implode('/', $endpoint);
+                continue;
             }
         }
 
