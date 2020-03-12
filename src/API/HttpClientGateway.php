@@ -2,7 +2,7 @@
 
 namespace TarfinLabs\Parasut\API;
 
-use Exception;
+use RuntimeException;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
@@ -188,7 +188,7 @@ class HttpClientGateway implements ClientGateway
                 throw new UnprocessableEntityException($response);
                 break;
             default:
-                throw new Exception("Unknown Paraşüt Exception: {$response->status()}");
+                throw new RuntimeException("Unknown Paraşüt Exception: {$response->status()}");
                 break;
         }
     }
