@@ -7,9 +7,21 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
 use TarfinLabs\Parasut\Models\Contact;
+use TarfinLabs\Parasut\Models\BaseModel;
 
-class BaseMock
+abstract class BaseMock
 {
+    protected static function fakeHttp(string $resource, array $response, int $returnStatus): void
+    {
+        Http::fake([
+            self::getResourceUrl($resource) => Http::response(
+                $response,
+                Response::HTTP_OK,
+                self::getJsonContentType()
+            ),
+        ]);
+    }
+
     protected static function getJsonContentType(): array
     {
         return ['content-type' => 'application/json; charset=utf-8'];
@@ -79,18 +91,17 @@ class BaseMock
         ];
     }
 
-    public static function allContacts(int $count = 3): void
-    {
-        self::fakeAuthentication();
 
-        Http::fake([
-            self::getResourceUrl('contacts') => Http::response(
-                self::allContactsResponse(),
-                Response::HTTP_OK,
-                self::getJsonContentType()
-            ),
-        ]);
-    }
+    abstract public static function all(int $count = 3): void;
+
+    abstract public static function create(BaseModel $contact): void;
+
+    abstract public static function find(): int;
+
+    abstract public static function update(Contact $contact): void;
+
+    abstract public static function delete(Contact $contact): void;
+
 
     protected static function allContactsResponse(int $count = 3): array
     {
@@ -159,7 +170,7 @@ class BaseMock
         return $data;
     }
 
-    protected static function createContactResponse(?Contact $contact): array
+    protected static function createContactResponse(Contact $contact = null): array
     {
         $faker = Factory::create('tr_TR');
 
@@ -214,61 +225,5 @@ class BaseMock
                 ],
             ],
         ];
-    }
-
-    public static function createContact(Contact $contact): void
-    {
-        self::fakeAuthentication();
-
-        Http::fake([
-            self::getResourceUrl('contacts') => Http::response(
-                self::createContactResponse($contact),
-                Response::HTTP_OK,
-                self::getJsonContentType()
-            ),
-        ]);
-    }
-
-    public static function updateContact(Contact $contact): void
-    {
-        self::fakeAuthentication();
-
-        Http::fake([
-            self::getResourceUrl('contacts'.'/'.$contact->id) => Http::response(
-                self::createContactResponse($contact),
-                Response::HTTP_OK,
-                self::getJsonContentType()
-            ),
-        ]);
-    }
-
-    public static function deleteContact(Contact $contact): void
-    {
-        self::fakeAuthentication();
-
-        Http::fake([
-            self::getResourceUrl('contacts'.'/'.$contact->id) => Http::response(
-                [[]],
-                Response::HTTP_NO_CONTENT,
-                self::getJsonContentType()
-            ),
-        ]);
-    }
-
-    public static function findContact(): int
-    {
-        self::fakeAuthentication();
-
-        $response = self::createContactResponse(null);
-
-        Http::fake([
-            self::getResourceUrl('contacts/'.$response['data']['id']) => Http::response(
-                $response,
-                Response::HTTP_OK,
-                self::getJsonContentType()
-            ),
-        ]);
-
-        return $response['data']['id'];
     }
 }

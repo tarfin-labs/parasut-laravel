@@ -3,15 +3,15 @@
 namespace TarfinLabs\Parasut\Tests;
 
 use TarfinLabs\Parasut\Models\Contact;
+use TarfinLabs\Parasut\Tests\Mocks\ContactMock;
 use TarfinLabs\Parasut\Repositories\ContactRepository;
-use TarfinLabs\Parasut\Tests\Mocks\BaseMock;
 
 class ContactTest extends TestCase
 {
     /** @test */
     public function user_can_list_contacts(): void
     {
-        BaseMock::allContacts();
+        ContactMock::all();
 
         $contactRepository = new ContactRepository();
 
@@ -26,7 +26,7 @@ class ContactTest extends TestCase
     {
         $contact = factory(Contact::class)->make();
 
-        BaseMock::createContact($contact);
+        ContactMock::create($contact);
 
         $contactRepository = new ContactRepository();
 
@@ -46,7 +46,7 @@ class ContactTest extends TestCase
     /** @test */
     public function user_can_view_a_contact(): void
     {
-        $contactId = BaseMock::findContact();
+        $contactId = ContactMock::find();
 
         $contactRepository = new ContactRepository();
 
@@ -68,14 +68,14 @@ class ContactTest extends TestCase
     {
         $contact = factory(Contact::class)->make();
 
-        BaseMock::createContact($contact);
+        ContactMock::create($contact);
         $contactRepository = new ContactRepository();
         $contact = $contactRepository->create($contact);
 
         $newContact = factory(Contact::class)->make();
         $newContact->id = $contact->id;
 
-        BaseMock::updateContact($contact);
+        ContactMock::update($contact);
         $updatedContact = $contactRepository->update($newContact);
 
         $this->assertInstanceOf(
@@ -94,11 +94,11 @@ class ContactTest extends TestCase
     {
         $contact = factory(Contact::class)->make();
 
-        BaseMock::createContact($contact);
+        ContactMock::create($contact);
         $contactRepository = new ContactRepository();
         $contact = $contactRepository->create($contact);
 
-        BaseMock::deleteContact($contact);
+        ContactMock::delete($contact);
         $result = $contactRepository->delete($contact);
 
         $this->assertTrue($result);
