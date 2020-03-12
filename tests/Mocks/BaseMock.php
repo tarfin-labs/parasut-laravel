@@ -25,6 +25,8 @@ abstract class BaseMock
 
     abstract public static function generateResponse(BaseModel $model = null): array;
 
+    abstract public static function generateResponseMultiple(int $count = 3): array;
+
     // endregion
 
     // region Helpers

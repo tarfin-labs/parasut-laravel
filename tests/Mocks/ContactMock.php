@@ -12,7 +12,7 @@ class ContactMock extends BaseMock
     {
         self::fakeAuthentication();
 
-        $response = self::allContactsResponse();
+        $response = self::generateResponseMultiple();
 
         self::fakeHttp(
             'contacts',
@@ -27,7 +27,7 @@ class ContactMock extends BaseMock
 
         self::fakeHttp(
             'contacts',
-            self::createContactResponse($contact),
+            self::generateResponse($contact),
             Response::HTTP_OK
         );
     }
@@ -36,7 +36,7 @@ class ContactMock extends BaseMock
     {
         self::fakeAuthentication();
 
-        $response = self::createContactResponse();
+        $response = self::generateResponse();
 
         self::fakeHttp(
             'contacts/'.$response['data']['id'],
@@ -53,7 +53,7 @@ class ContactMock extends BaseMock
 
         self::fakeHttp(
             'contacts'.'/'.$contact->id,
-            self::createContactResponse($contact),
+            self::generateResponse($contact),
             Response::HTTP_OK
         );
     }
@@ -67,5 +67,15 @@ class ContactMock extends BaseMock
             [[]],
             Response::HTTP_OK
         );
+    }
+
+    public static function generateResponse(BaseModel $model = null): array
+    {
+        return self::response($model, Contact::class, 'contacts');
+    }
+
+    public static function generateResponseMultiple(int $count = 3): array
+    {
+        return self::responseMultiple($count, Contact::class, 'contacts');
     }
 }
