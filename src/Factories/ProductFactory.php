@@ -7,11 +7,11 @@ use TarfinLabs\Parasut\Models\Product;
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-$factory->define(Product::class, fn(Faker $faker, array $attributes) => [
+$factory->define(Product::class, fn (Faker $faker, array $attributes) => [
     'name' => $attributes['name'] ?? $faker->word.'#TEST#',
 ]);
 
-$factory->state(Product::class, 'creation', fn(Faker $faker, array $attributes) => [
+$factory->state(Product::class, 'creation', fn (Faker $faker, array $attributes) => [
     'code'                      => $attributes['code'] ?? $faker->numberBetween(1, 100),
     'vat_rate'                  => $attributes['vat_rate'] ?? $faker->randomElement([0, 1, 8, 18]),
     'sales_excise_duty'         => $attributes['sales_excise_duty'] ?? $faker->randomFloat(2, 1, 100),
@@ -29,7 +29,7 @@ $factory->state(Product::class, 'creation', fn(Faker $faker, array $attributes) 
     'initial_stock_count'       => $attributes['initial_stock_count'] ?? 0.0,
 ]);
 
-$factory->state(Product::class, 'response', fn(Faker $faker, array $attributes) => [
+$factory->state(Product::class, 'response', fn (Faker $faker, array $attributes) => [
     'sales_excise_duty_code'         => $attributes['sales_excise_duty_code'] ?? null,
     'sales_invoice_details_count'    => $attributes['sales_invoice_details_count'] ?? 0,
     'purchase_invoice_details_count' => $attributes['purchase_invoice_details_count'] ?? 0,
