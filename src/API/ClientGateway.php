@@ -2,6 +2,8 @@
 
 namespace TarfinLabs\Parasut\API;
 
+use Illuminate\Support\Carbon;
+
 interface ClientGateway
 {
     public function send(
@@ -20,4 +22,6 @@ interface ClientGateway
     public function getRefreshToken(): string;
 
     public function authenticate(): bool;
+
+    public function getExpiresAt(): ?Carbon;
 }
