@@ -71,8 +71,6 @@ class ProductMock extends BaseMock
         );
     }
 
-    // TODO: Resource isimlerini tek bir yerde topla, enum olabilir
-
     public static function generateResponse(BaseModel $model = null): array
     {
         return self::response($model, Product::class, ResourceNames::PRODUCT);
