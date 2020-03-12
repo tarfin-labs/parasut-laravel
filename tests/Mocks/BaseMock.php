@@ -16,7 +16,7 @@ abstract class BaseMock
         Http::fake([
             self::getResourceUrl($resource) => Http::response(
                 $response,
-                Response::HTTP_OK,
+                $returnStatus,
                 self::getJsonContentType()
             ),
         ]);
@@ -91,6 +91,7 @@ abstract class BaseMock
         ];
     }
 
+    // region Abstract Functions
 
     abstract public static function all(int $count = 3): void;
 
@@ -101,6 +102,8 @@ abstract class BaseMock
     abstract public static function update(Contact $contact): void;
 
     abstract public static function delete(Contact $contact): void;
+
+    // endregion
 
 
     protected static function allContactsResponse(int $count = 3): array
