@@ -48,7 +48,7 @@ class ContactMock extends BaseMock
         return $response['data']['id'];
     }
 
-    public static function update(Contact $contact): void
+    public static function update(BaseModel $contact): void
     {
         self::fakeAuthentication();
 
@@ -59,7 +59,7 @@ class ContactMock extends BaseMock
         );
     }
 
-    public static function delete(Contact $contact): void
+    public static function delete(BaseModel $contact): void
     {
         self::fakeAuthentication();
 
