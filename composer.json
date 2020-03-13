@@ -70,9 +70,7 @@
         "laravel": {
             "providers": [
                 "TarfinLabs\\Parasut\\ParasutServiceProvider"
-            ],
-            "aliases": {
-            }
+            ]
         }
     }
 }

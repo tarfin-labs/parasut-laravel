@@ -141,7 +141,7 @@ class HttpClientGateway implements ClientGateway
         $queryString = $this->buildHttpQuery($filters, $sorts, $includes, $page, $pageSize);
 
         if (! empty($queryString)) {
-            $url = implode('?', [$queryString]);
+            $url .= implode('?', [$queryString]);
         }
 
         $response = Http::withToken($this->getAccessToken())
