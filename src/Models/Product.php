@@ -4,6 +4,33 @@ namespace TarfinLabs\Parasut\Models;
 
 class Product extends BaseModel
 {
+    public $fillable = [
+        'name',
+        'code',
+        'vat_rate',
+        'sales_excise_duty',
+        'sales_excise_duty_type',
+        'purchase_excise_duty',
+        'purchase_excise_duty_type',
+        'unit',
+        'communications_tax_rate',
+        'archived',
+        'list_price',
+        'currency',
+        'buying_price',
+        'buying_currency',
+        'inventory_tracking',
+        'initial_stock_count',
+        'sales_excise_duty_code',
+        'sales_invoice_details_count',
+        'purchase_invoice_details_count',
+        'list_price_in_trl',
+        'buying_price_in_trl',
+        'stock_count',
+        'created_at',
+        'updated_at',
+    ];
+
     protected $schema = [
         'name'                           => 'string',
         'code'                           => 'string',
