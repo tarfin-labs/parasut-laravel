@@ -158,38 +158,33 @@ class HttpClientGateway implements ClientGateway
      * Catches the status code and throws appropriate exception.
      *
      * @param  \Illuminate\Http\Client\Response  $response
-     *
-     * @throws \TarfinLabs\Parasut\Exceptions\BadRequestException
-     * @throws \TarfinLabs\Parasut\Exceptions\ForbiddenException
-     * @throws \TarfinLabs\Parasut\Exceptions\NotFoundException
-     * @throws \TarfinLabs\Parasut\Exceptions\TooManyRequestsException
-     * @throws \TarfinLabs\Parasut\Exceptions\UnauthorizedException
-     * @throws \TarfinLabs\Parasut\Exceptions\UnprocessableEntityException
      */
     protected function catchException(Response $response): void
     {
         switch ($response->status()) {
             case BadRequestException::$statusCode:
-                throw new BadRequestException($response);
+                $exceptionClass = BadRequestException::class;
                 break;
             case ForbiddenException::$statusCode:
-                throw new ForbiddenException($response);
+                $exceptionClass = ForbiddenException::class;
                 break;
             case NotFoundException::$statusCode:
-                throw new NotFoundException($response);
+                $exceptionClass = NotFoundException::class;
                 break;
             case TooManyRequestsException::$statusCode:
-                throw new TooManyRequestsException($response);
+                $exceptionClass = TooManyRequestsException::class;
                 break;
             case UnauthorizedException::$statusCode:
-                throw new UnauthorizedException($response);
+                $exceptionClass = UnauthorizedException::class;
                 break;
             case UnprocessableEntityException::$statusCode:
-                throw new UnprocessableEntityException($response);
+                $exceptionClass = UnprocessableEntityException::class;
                 break;
             default:
-                throw new RuntimeException("Unknown Paraşüt Exception: {$response->status()}");
+                $exceptionClass = RuntimeException::class;
                 break;
         }
+
+        throw new $exceptionClass($response);
     }
 }
