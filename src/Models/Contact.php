@@ -4,6 +4,39 @@ namespace TarfinLabs\Parasut\Models;
 
 class Contact extends BaseModel
 {
+    public $fillable = [
+        'created_at',
+        'updated_at',
+        'contact_type',
+        'name',
+        'email',
+        'short_name',
+        'balance',
+        'trl_balance',
+        'usd_balance',
+        'eur_balance',
+        'gbp_balance',
+        'tax_number',
+        'tax_office',
+        'archived',
+        'account_type',
+        'city',
+        'district',
+        'address',
+        'phone',
+        'fax',
+        'is_abroad',
+        'term_days',
+        //'invoicing_preference,
+        'sharings_count',
+        //'iban,
+        'exchange_rate_type',
+        'iban',
+        'sharing_preview_url',
+        'sharing_preview_path',
+        'payment_reminder_preview_url',
+    ];
+
     protected $schema = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
