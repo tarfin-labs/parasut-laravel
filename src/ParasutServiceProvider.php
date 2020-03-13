@@ -54,7 +54,7 @@ class ParasutServiceProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__.'/../config/parasut.php' => config_path('parasut.php'),
-        ], 'config');
+        ], 'parasut-config');
     }
 
     protected function loadFactories(): void
