@@ -152,6 +152,15 @@ abstract class BaseMock
 
     protected static function responseMultiple(int $count, string $class, string $resource, array $extraMeta): array
     {
+        if ($count === 0)
+        {
+            return [
+                'data' => [],
+                'links' => [],
+                'meta' => [],
+            ];
+        }
+
         $data = [];
 
         foreach (range(1, $count) as $index) {
