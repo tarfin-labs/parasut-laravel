@@ -54,8 +54,7 @@ abstract class BaseRepository
 
         $this->removeFirstSushiModel();
 
-        if (!empty($rawData['data']))
-        {
+        if (! empty($rawData['data'])) {
             $this->model::insert($this->multipleRawDataToAttributes($rawData['data']));
         }
 
