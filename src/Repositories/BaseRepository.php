@@ -15,8 +15,8 @@ abstract class BaseRepository
     protected string $endpoint;
     protected string $model;
 
-    protected BaseMeta $meta;
-    protected Links $links;
+    protected ?BaseMeta $meta;
+    protected ?Links $links;
 
     protected array $sorts = [];
     protected array $filters = [];
@@ -31,7 +31,7 @@ abstract class BaseRepository
 
     // region CRUD
 
-    public function all(): Collection
+    public function all(): ?Collection
     {
         $rawData = $this->clientGateway->send(
             HttpMethods::GET,
@@ -44,12 +44,20 @@ abstract class BaseRepository
             $this->pageSize ?? null
         );
 
-        $this->meta = $this->createMeta($rawData['meta']);
-        $this->links = new Links($rawData['links']);
+        $this->meta = ! empty($rawData['meta'])
+            ? $this->createMeta($rawData['meta'])
+            : null;
+
+        $this->links = ! empty($rawData['links'])
+            ? new Links($rawData['links'])
+            : null;
 
         $this->removeFirstSushiModel();
 
-        $this->model::insert($this->multipleRawDataToAttributes($rawData['data']));
+        if (!empty($rawData['data']))
+        {
+            $this->model::insert($this->multipleRawDataToAttributes($rawData['data']));
+        }
 
         return $this->model::all();
     }
