@@ -14,7 +14,7 @@ class ContactMock extends BaseMock
     {
         self::fakeAuthentication();
 
-        $response = self::generateResponseMultiple();
+        $response = self::generateResponseMultiple($count);
 
         self::fakeHttp(
             ResourceNames::CONTACT,
